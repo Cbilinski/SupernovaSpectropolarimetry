@@ -1,0 +1,1589 @@
+sed 's/shift\.fits/shift.align.fits.hot-sub.fits/g' imcomb.list.out > imcomb.sublist.out
+cp ../soft/*.cl .
+cp ../soft/*.pl .
+
+%cannot safely do this, use the actual list and replace individual rows that are too long
+%sed 's/.\{2\}\.fit\.shift.*/*.fit.shift.align.fits.hot-sub.fits/' imcomb.sublist.out > imcomb.sublist.out.stackuse
+
+cl
+cl < stacksub.cl
+logout
+
+
+%stack the ACTUAL list
+
+
+ls subcomb*.fit > subcombold.list
+perl combsubrenamernew.pl
+
+ls *subcomb*.fits > subcomb.list
+paste subcomb.list subcomb.list subcomb.list > addstarsubcomb.atsn.prep.script
+paste psfcomb.list subcomb.list | sed 's/\.align\.fits\t/.align.fits.psf.1.fits /' | sed 's/subcomb\.fits/subcomb.fits.psf.1.fits/' | sed 's/^/cp /' > combpsfcopier.script
+. combpsfcopier.script
+sed 's/2010jl/2006gy/g' addstarsubcomb.atsn.temp.pl > addstarsubcomb.atsn.pl
+
+cl
+digiphot
+daophot
+!perl addstarsubcomb.atsn.pl
+phot *subcomb.fits.addstar.atsn.*.fits SNcoord.coo default
+ls *subcomb.fits.addstar.atsn.*.fits > addstarsubcomb.atsn.list
+cl < txdumpphotatsnsubcomb.cl
+logout
+bash
+
+
+
+sed 's/^/perl fakestarsearchersubcomb.atsn.pl /' subcomb.list > fakestarsearchersubcomb.atsn.script
+sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearchersubcomb.atsn.temp.pl > fakestarsearchersubcomb.atsn.pl
+.  fakestarsearchersubcomb.atsn.script
+
+perl limitingmagnitudecalculatorsubcomb.atsn.pl
+gedit finallimitingmagnitudessubcomb.atsn.list &
+
+
+
+%%%
+
+
+
+%%%Lim mag code version for single images
+make SNcoord.coo from the sn####.addstar.atsn files
+cp /home/cbilinski/database_chris/soft/*.pl .
+cp /home/cbilinski/database_chris/soft/*.cl .
+
+cl
+daophot
+!paste psf.list psf.list | sed 's/^/phot /' | sed 's/\t/.hot-sub.fits SNcoord.coo /' | sed 's/$/.limmag.mag.1/' > limmagphot.script
+cl < limmagphot.script
+cl < txdumplimmagphot.cl
+!paste psf.list psf.list | sed 's/^/hselect /' | sed 's/\t/ CCDGAIN,EXPTIME yes > /' | sed 's/$/.limmag.gaintime/' > hselect.script
+cl < hselect.script
+
+!paste psf.list psf.list | sed 's/^/paste /' | sed 's/\t/.limmag.gaintime /' | sed "s/$/.limmag.par | sed 's\/^\/limmag 3.0 25.0 \/' | sed 's\/$\/ >> final2006gylimmag.unnamed.list'\//" > limmag.prepare.script
+!. limmag.prepare.script | sed 's/\t/ /g' | sed 's/  / /g' > limmagrun.script
+cl < limmagrun.script
+!gedit limmagdeltacalculator.pl
+logout
+perl limmagdeltacalculator.pl
+gedit final2006gylimmag.list &
+
+
+
+
+
+%%% exptime code
+cl
+daophot
+cl < exptimestack.cl
+ls exptime.comb* > exptime.list
+%%%
+!perl exptimecombrenamernew.pl
+!perl exptimecombcalculatornew.pl
+%%%
+
+!perl exptimecombrenamer.pl
+!perl exptimecombcalculator.pl
+%%%
+
+
+%%%this be the limmag sub code you are looking at here:
+cl
+digiphot
+daophot
+!paste subcomb.list subcomb.list | sed 's/^/phot /' | sed 's/\t/ SNcoord.coo /' | sed 's/  //g' | sed 's/$/.limmag.mag.1/' > limmagphotsubcomb.script
+cl < limmagphotsubcomb.script
+cl < txdumplimmagphotsubcomb.cl
+!paste psfcomb.crop.list subcomb.list | sed 's/^/paste /' | sed 's/\t/.limmag.gaintime /' | sed "s/$/.limmag.par | sed 's\/^\/limmag 3.0 25.0 \/' | sed 's\/$\/ >> final2006gylimmagsubcomb.unnamed.list'\//" | sed 's/  //g' > limmagsubcomb.prepare.script
+!. limmagsubcomb.prepare.script | sed 's/\t/ /g' | sed 's/  / /g' > limmagsubcomb.script
+cl < limmagsubcomb.script
+!gedit limmagdeltacalculatorsubcomb.pl
+logout
+perl limmagdeltacalculatorsubcomb.pl
+gedit final2006gylimmagsubcomb.list &
+%%%
+
+
+
+
+%%% make new comb limmag code here, put in correct SN name
+!gedit cropcoordlimmaggenerator.pl
+!perl cropcoordlimmaggenerator.pl
+!paste psfcomb.crop.list psfcomb.crop.list psfcomb.crop.list | sed 's/^/phot /' | sed 's/\t/.hot-sub.crop.fits /' | sed 's/  //g' | sed 's/\t/.coords /' | sed 's/$/.limmag.mag.1/' > limmagphotcomb.crop.script
+cl < limmagphotcomb.crop.script
+cl < txdumplimmagphotcomb.crop.cl
+
+!paste psfcomb.crop.list psfcomb.crop.list | sed 's/^/paste /' | sed 's/\t/.limmag.gaintime /' | sed "s/$/.limmag.par | sed 's\/^\/limmag 3.0 25.0 \/' | sed 's\/$\/ >> final2006gylimmagcomb.crop.unnamed.list'\//" | sed 's/  //g' > limmagcomb.prepare.script
+!. limmagcomb.prepare.script | sed 's/\t/ /g' | sed 's/  / /g' > limmagcomb.crop.script
+cl < limmagcomb.crop.script
+!gedit limmagdeltacalculatorcomb.crop.pl
+logout
+perl limmagdeltacalculatorcomb.crop.pl
+gedit final2006gylimmagcomb.crop.list &
+
+%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+yes yes no 20 3 60 INDEF INDEF
+
+%%% KAIT light curve procedure
+cp ../soft/LCphot.cl .
+cp ../soft/LCall.cl
+cp ../soft/deltacalculatorLC.pl .
+cp ../soft/limitingmagnitudecalculatorLC.pl .
+
+%put in 500-y coordinate value in gedited file 
+%cp SNcoord.coo SNcoord.coo.unflipped
+%gedit SNcoord.coo.unflipped &
+
+cl
+daophot
+cl < LCphot.cl
+logout
+
+sed 's/^/display /' deepsnimages.list | sed 's/$/ 1/' | sed 's/fits/fits.aligned.fits/' > LCpsftemp1
+sed 's/^/psf /' deepsnimages.list | sed 's/$/ default "" default default default interac+/' | sed 's/fits/fits.aligned.fits/' > LCpsftemp2
+paste LCpsftemp1 LCpsftemp2 | sed 's/\ 1\t/ 1\n/' > LCpsf.manual.list
+gedit LCpsf.manual.list &
+cl
+daophot
+!ds9 &
+%run psf photometry
+allstar *.aligned.fits
+cl < LCall.cl
+logout
+
+sed 's/^/perl deltacalculatorLC.pl /' deepsnimages.list > deltacalculatorLC.script
+. deltacalculatorLC.script
+gedit limitingmagnitudecalculatorLC.pl &
+
+% put in correct SN name
+
+perl limitingmagnitudecalculatorLC.pl
+gedit 2006amKAITLC.dat &
+cp 2006amKAITLC.dat /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/
+
+%%%
+
+
+%%%fixing weird data files
+
+gedit finallimitingmagnitudes.atsn.phot.list finallimitingmagnitudescomb.atsn.crop.phot.list psf.list delta.list imlim.list.yes badpsf.list &
+gedit final2006gylimmag.list final2006gylimmagcomb.crop.list &
+rm limitingmagnitude.atsn.phot.list
+sed 's/^/perl fakestarsearcher.atsn.phot.pl /' psf.list > fakestarsearcher.atsn.phot.script
+sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearcher.atsn.phot.temp.pl > fakestarsearcher.atsn.phot.pl
+. fakestarsearcher.atsn.phot.script
+
+paste psf.list psf.list | sed 's/^/paste /' | sed 's/\t/.limmag.gaintime /' | sed "s/$/.limmag.par | sed 's\/^\/limmag 3.0 25.0 \/' | sed 's\/$\/ >> final2006gylimmag.unnamed.list'\//" > limmag.prepare.script
+. limmag.prepare.script | sed 's/\t/ /g' | sed 's/  / /g' > limmagrun.script
+cl
+daophot
+rm final2006gylimmag.unnamed.list
+cl < limmagrun.script
+logout
+gedit limmagdeltacalculator.pl &
+perl limmagdeltacalculator.pl
+gedit final2006gylimmag.list &
+
+%!paste psfcomb.crop.list psfcomb.crop.list | sed 's/^/paste /' | sed 's/\t/.limmag.gaintime /' | sed "s/$/.limmag.par | sed 's\/^\/limmag 3.0 25.0 \/' | sed 's\/$\/ >> final2006gylimmagcomb.crop.unnamed.list'\//" | sed 's/  //g' > limmagcomb.prepare.script
+%!. limmagcomb.prepare.script | sed 's/\t/ /g' | sed 's/  / /g' > limmagcomb.crop.script
+%cl < limmagcomb.crop.script
+%!gedit limmagdeltacalculatorcomb.crop.pl
+%logout
+%perl limmagdeltacalculatorcomb.crop.pl
+%gedit final2006gylimmagcomb.crop.list &
+
+perl limitingmagnitudecalculator.atsn.phot.pl
+gedit finallimitingmagnitudes.atsn.phot.list &
+
+
+sed 's/ y.*//' imlim.list.yes | sed 's/ $/.shift.fits/' > imcomb.list.in
+perl combinationorganizer.pl
+
+perl limitingmagnitudecalculatorcomb.atsn.crop.phot.pl
+gedit finallimitingmagnitudescomb.atsn.crop.phot.list &
+%%%
+
+
+
+%%%%%
+%
+%
+%%%%%
+%
+%
+%%%%%
+
+%%%% for extended problems
+
+200107 2006gy20010710.fit.shift.align.fits
+200306 2006gy20030605.fit.shift.align.fits
+200408 2006gy20040822.fit.shift.align.fits
+200411 2006gy20041125.fit.shift.align.fits
+200606 2006gy20060616.fit.shift.align.fits
+200610 2006gy20061012.fit.shift.align.fits
+200709 2006gy20070926.fit.shift.align.fits
+
+cp imcomb.list.out imcomb.list.out.stackuse
+gedit imcomb.list.out.stackuse &
+cl
+rm 200107.comb.fits
+rm 200306.comb.fits
+rm 200408.comb.fits
+rm 200411.comb.fits
+rm 200606.comb.fits
+rm 200610.comb.fits
+rm 200709.comb.fits
+
+imcombine 2006gy20010716.fit.shift.fits,2006gy20010722.fit.shift.fits 200107.comb.fits
+imcombine 2006gy20030613.fit.shift.fits,2006gy20030627.fit.shift.fits 200306.comb.fits
+imcombine 2006gy200408*.fit.shift.fits 200408.comb.fits
+imcombine 2006gy20041102.fit.shift.fits,2006gy20041123.fit.shift.fits 200411.comb.fits
+imcombine 2006gy20060603.fit.shift.fits,2006gy20060624.fit.shift.fits 200606.comb.fits
+imcombine 2006gy20061021.fit.shift.fits,2006gy20061031.fit.shift.fits 200610.comb.fits
+imcombine 2006gy20070903.fit.shift.fits,2006gy20070919.fit.shift.fits 200709.comb.fits
+
+wcscopy 200107.comb.fits ref/new-image.fits
+wcscopy 200306.comb.fits ref/new-image.fits
+wcscopy 200408.comb.fits ref/new-image.fits
+wcscopy 200411.comb.fits ref/new-image.fits
+wcscopy 200606.comb.fits ref/new-image.fits
+wcscopy 200610.comb.fits ref/new-image.fits
+wcscopy 200709.comb.fits ref/new-image.fits
+rm 200107.comb.align.fits*
+rm 200306.comb.align.fits*
+rm 200408.comb.align.fits*
+rm 200411.comb.align.fits*
+rm 200606.comb.align.fits*
+rm 200610.comb.align.fits*
+rm 200709.comb.align.fits*
+imcopy 200107.comb.fits[*,-*] 200107.comb.align.fits
+imcopy 200306.comb.fits[*,-*] 200306.comb.align.fits
+imcopy 200408.comb.fits[*,-*] 200408.comb.align.fits
+imcopy 200411.comb.fits[*,-*] 200411.comb.align.fits
+imcopy 200606.comb.fits[*,-*] 200606.comb.align.fits
+imcopy 200610.comb.fits[*,-*] 200610.comb.align.fits
+imcopy 200709.comb.fits[*,-*] 200709.comb.align.fits
+daophot
+
+phot 200107.comb.align.fits fort.50 default
+phot 200306.comb.align.fits fort.50 default
+phot 200408.comb.align.fits fort.50 default
+phot 200411.comb.align.fits fort.50 default
+phot 200606.comb.align.fits fort.50 default
+phot 200610.comb.align.fits fort.50 default
+phot 200709.comb.align.fits fort.50 default
+!ds9 &
+
+display 200107.comb.align.fits 1
+psf 200107.comb.align.fits default "" default default default interac+
+display 200306.comb.align.fits 1
+psf 200306.comb.align.fits default "" default default default interac+
+display 200408.comb.align.fits 1
+psf 200408.comb.align.fits default "" default default default interac+
+display 200411.comb.align.fits 1
+psf 200411.comb.align.fits default "" default default default interac+
+display 200606.comb.align.fits 1
+psf 200606.comb.align.fits default "" default default default interac+
+display 200610.comb.align.fits 1
+psf 200610.comb.align.fits default "" default default default interac+
+display 200709.comb.align.fits 1
+psf 200709.comb.align.fits default "" default default default interac+
+
+allstar 200107.comb.align.fits
+allstar 200306.comb.align.fits
+allstar 200408.comb.align.fits
+allstar 200411.comb.align.fits
+allstar 200606.comb.align.fits
+allstar 200610.comb.align.fits
+allstar 200709.comb.align.fits
+
+print("txdump 200107.comb.align.fits.mag.1 id,mag,merr yes > 200107.comb.align.fits.mag.mags") | cl
+print("txdump 200306.comb.align.fits.mag.1 id,mag,merr yes > 200306.comb.align.fits.mag.mags") | cl
+print("txdump 200408.comb.align.fits.mag.1 id,mag,merr yes > 200408.comb.align.fits.mag.mags") | cl
+print("txdump 200411.comb.align.fits.mag.1 id,mag,merr yes > 200411.comb.align.fits.mag.mags") | cl
+print("txdump 200606.comb.align.fits.mag.1 id,mag,merr yes > 200606.comb.align.fits.mag.mags") | cl
+print("txdump 200610.comb.align.fits.mag.1 id,mag,merr yes > 200610.comb.align.fits.mag.mags") | cl
+print("txdump 200709.comb.align.fits.mag.1 id,mag,merr yes > 200709.comb.align.fits.mag.mags") | cl
+
+print("txdump 200107.comb.align.fits.als.1 id,mag,merr yes > 200107.comb.align.fits.als.mags.unsorted") | cl
+print("txdump 200306.comb.align.fits.als.1 id,mag,merr yes > 200306.comb.align.fits.als.mags.unsorted") | cl
+print("txdump 200408.comb.align.fits.als.1 id,mag,merr yes > 200408.comb.align.fits.als.mags.unsorted") | cl
+print("txdump 200411.comb.align.fits.als.1 id,mag,merr yes > 200411.comb.align.fits.als.mags.unsorted") | cl
+print("txdump 200606.comb.align.fits.als.1 id,mag,merr yes > 200606.comb.align.fits.als.mags.unsorted") | cl
+print("txdump 200610.comb.align.fits.als.1 id,mag,merr yes > 200610.comb.align.fits.als.mags.unsorted") | cl
+print("txdump 200709.comb.align.fits.als.1 id,mag,merr yes > 200709.comb.align.fits.als.mags.unsorted") | cl
+
+print("!sort -n 200107.comb.align.fits.als.mags.unsorted > 200107.comb.align.fits.als.mags") | cl
+print("!sort -n 200306.comb.align.fits.als.mags.unsorted > 200306.comb.align.fits.als.mags") | cl
+print("!sort -n 200408.comb.align.fits.als.mags.unsorted > 200408.comb.align.fits.als.mags") | cl
+print("!sort -n 200411.comb.align.fits.als.mags.unsorted > 200411.comb.align.fits.als.mags") | cl
+print("!sort -n 200606.comb.align.fits.als.mags.unsorted > 200606.comb.align.fits.als.mags") | cl
+print("!sort -n 200610.comb.align.fits.als.mags.unsorted > 200610.comb.align.fits.als.mags") | cl
+print("!sort -n 200709.comb.align.fits.als.mags.unsorted > 200709.comb.align.fits.als.mags") | cl
+
+
+!sed 's/^/perl deltacalculatorcomb.pl /' psfcomb.list > deltacalculatorcomb.script
+logout
+rm deltacomb.list
+. deltacalculatorcomb.script
+rm 200107.comb.align.crop.fits*
+rm 200306.comb.align.crop.fits*
+rm 200408.comb.align.crop.fits*
+rm 200411.comb.align.crop.fits*
+rm 200606.comb.align.crop.fits*
+rm 200610.comb.align.crop.fits*
+rm 200709.comb.align.crop.fits*
+cl
+daophot
+imcopy 200107.comb.align.fits[126:375,126:375] 200107.comb.align.crop.fits
+imcopy 200306.comb.align.fits[126:375,126:375] 200306.comb.align.crop.fits
+imcopy 200408.comb.align.fits[126:375,126:375] 200408.comb.align.crop.fits
+imcopy 200411.comb.align.fits[126:375,126:375] 200411.comb.align.crop.fits
+imcopy 200606.comb.align.fits[126:375,126:375] 200606.comb.align.crop.fits
+imcopy 200610.comb.align.fits[126:375,126:375] 200610.comb.align.crop.fits
+imcopy 200709.comb.align.fits[126:375,126:375] 200709.comb.align.crop.fits
+rm sn.crop.200107.fits
+rm sn.crop.200306.fits
+rm sn.crop.200408.fits
+rm sn.crop.200411.fits
+rm sn.crop.200606.fits
+rm sn.crop.200610.fits
+rm sn.crop.200709.fits
+imcopy sn.fit[126:375,126:375] sn.crop.200107.fits
+imcopy sn.fit[126:375,126:375] sn.crop.200306.fits
+imcopy sn.fit[126:375,126:375] sn.crop.200408.fits
+imcopy sn.fit[126:375,126:375] sn.crop.200411.fits
+imcopy sn.fit[126:375,126:375] sn.crop.200606.fits
+imcopy sn.fit[126:375,126:375] sn.crop.200610.fits
+imcopy sn.fit[126:375,126:375] sn.crop.200709.fits
+logout
+echo monkeys >s1_removemesoitdoesntfail
+csh
+cl
+
+
+print("rm s1*") | cl
+print("cp sn.crop.200107.fits s1.fits") | cl
+print("cp 200107.comb.align.crop.fits s1_001.fits") | cl
+print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+print("mv s1_001.shift.conv.fits 200107.comb.align.crop.fits.conv.fits") | cl
+print("mv s1_001.shift.sub.fits 200107.comb.align.crop.fits.sub.fits") | cl
+print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 200107.comb.align.crop.fits.hot-sub.crop.fits") | cl
+
+print("rm s1*") | cl
+print("cp sn.crop.200306.fits s1.fits") | cl
+print("cp 200306.comb.align.crop.fits s1_001.fits") | cl
+print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+print("mv s1_001.shift.conv.fits 200306.comb.align.crop.fits.conv.fits") | cl
+print("mv s1_001.shift.sub.fits 200306.comb.align.crop.fits.sub.fits") | cl
+print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 200306.comb.align.crop.fits.hot-sub.crop.fits") | cl
+
+print("rm s1*") | cl
+print("cp sn.crop.200408.fits s1.fits") | cl
+print("cp 200408.comb.align.crop.fits s1_001.fits") | cl
+print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+print("mv s1_001.shift.conv.fits 200408.comb.align.crop.fits.conv.fits") | cl
+print("mv s1_001.shift.sub.fits 200408.comb.align.crop.fits.sub.fits") | cl
+print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 200408.comb.align.crop.fits.hot-sub.crop.fits") | cl
+
+print("rm s1*") | cl
+print("cp sn.crop.200411.fits s1.fits") | cl
+print("cp 200411.comb.align.crop.fits s1_001.fits") | cl
+print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+print("mv s1_001.shift.conv.fits 200411.comb.align.crop.fits.conv.fits") | cl
+print("mv s1_001.shift.sub.fits 200411.comb.align.crop.fits.sub.fits") | cl
+print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 200411.comb.align.crop.fits.hot-sub.crop.fits") | cl
+
+print("rm s1*") | cl
+print("cp sn.crop.200606.fits s1.fits") | cl
+print("cp 200606.comb.align.crop.fits s1_001.fits") | cl
+print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+print("mv s1_001.shift.conv.fits 200606.comb.align.crop.fits.conv.fits") | cl
+print("mv s1_001.shift.sub.fits 200606.comb.align.crop.fits.sub.fits") | cl
+print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 200606.comb.align.crop.fits.hot-sub.crop.fits") | cl
+
+print("rm s1*") | cl
+print("cp sn.crop.200610.fits s1.fits") | cl
+print("cp 200610.comb.align.crop.fits s1_001.fits") | cl
+print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+print("mv s1_001.shift.conv.fits 200610.comb.align.crop.fits.conv.fits") | cl
+print("mv s1_001.shift.sub.fits 200610.comb.align.crop.fits.sub.fits") | cl
+print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 200610.comb.align.crop.fits.hot-sub.crop.fits") | cl
+
+print("rm s1*") | cl
+print("cp sn.crop.200709.fits s1.fits") | cl
+print("cp 200709.comb.align.crop.fits s1_001.fits") | cl
+print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+print("mv s1_001.shift.conv.fits 200709.comb.align.crop.fits.conv.fits") | cl
+print("mv s1_001.shift.sub.fits 200709.comb.align.crop.fits.sub.fits") | cl
+print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 200709.comb.align.crop.fits.hot-sub.crop.fits") | cl
+
+!cp addstar.crop.list addstar.crop.list.modified
+!gedit addstar.crop.list.modified &
+
+!sed 's/addstar\.crop\.list/addstar.crop.list.modified/' addstarcomb.atsn.crop.pl > addstarcomb.atsn.crop.modified.pl
+cp /home/cbilinski/database_chris/soft/default* .
+!sed 's/addstar.crop.list/addstar.crop.list.modified/' addstarcomb.prep.atsn.crop.pl > addstarcomb.prep.atsn.crop.modified.pl
+!perl addstarcomb.prep.atsn.crop.modified.pl
+!perl addstarcomb.atsn.crop.modified.pl
+logout
+
+ls 200107.comb.align.crop.fits.addstar.atsn.crop*.fits > alignedcropsub.modified.list
+ls 200306.comb.align.crop.fits.addstar.atsn.crop*.fits >> alignedcropsub.modified.list
+ls 200408.comb.align.crop.fits.addstar.atsn.crop*.fits >> alignedcropsub.modified.list
+ls 200411.comb.align.crop.fits.addstar.atsn.crop*.fits >> alignedcropsub.modified.list
+ls 200606.comb.align.crop.fits.addstar.atsn.crop*.fits >> alignedcropsub.modified.list
+ls 200610.comb.align.crop.fits.addstar.atsn.crop*.fits >> alignedcropsub.modified.list
+ls 200709.comb.align.crop.fits.addstar.atsn.crop*.fits >> alignedcropsub.modified.list
+sed 's/addstar\.crop\.list/addstar.crop.list.modified/' cropcoordlistgenerator.pl > cropcoordlistgenerator.modified.pl
+perl cropcoordlistgenerator.modified.pl
+paste alignedcropsub.modified.list alignedcropsub.modified.list | sed 's/^/phot /' | sed 's/\t/ /' |sed 's/$/\.coords default/' > cropphotatsn.modified.script
+cl
+daophot
+cl < cropphotatsn.modified.script
+!sed 's/alignedcropsub\.list/alignedcropsub.modified.list/' txdumpphotatsncomb.cl > txdumpphotatsncomb.modified.cl
+cl < txdumpphotatsncomb.modified.cl
+logout
+bash
+rm limitingmagnitudecomb.atsn.crop.phot.list
+. fakestarsearchercomb.atsn.crop.phot.script
+perl limitingmagnitudecalculatorcomb.atsn.crop.phot.pl
+gedit finallimitingmagnitudescomb.atsn.crop.phot.list &
+
+
+%also need to run on limmag.cl combined version....
+sed 's/imcomb\.list\.out/imcomb.list.out.stackuse/' exptimestack.cl > exptimestack.modified.cl 
+cl
+daophot
+cl exptimestack.modified.cl
+ls exptime.comb* > exptime.list
+!sed 's/imcomb\.list\.out/imcomb.list.out.stackuse/' exptimecombrenamer.pl > exptimecombrenamer.modified.pl
+!perl exptimecombrenamer.modified.pl
+!perl exptimecombcalculator.pl
+logout
+
+sed 's/addstar\.crop\.list/addstar.crop.list.modified/' cropcoordlimmaggenerator.pl > cropcoordlimmaggenerator.modified.pl
+perl cropcoordlimmaggenerator.modified.pl
+cl
+daophot
+phot 200107.comb.align.crop.fits.hot-sub.crop.fits 200107.comb.align.crop.fits.coords 200107.comb.align.crop.fits.limmag.mag.1
+phot 200306.comb.align.crop.fits.hot-sub.crop.fits 200306.comb.align.crop.fits.coords 200306.comb.align.crop.fits.limmag.mag.1
+phot 200408.comb.align.crop.fits.hot-sub.crop.fits 200408.comb.align.crop.fits.coords 200408.comb.align.crop.fits.limmag.mag.1
+phot 200411.comb.align.crop.fits.hot-sub.crop.fits 200411.comb.align.crop.fits.coords 200411.comb.align.crop.fits.limmag.mag.1
+phot 200606.comb.align.crop.fits.hot-sub.crop.fits 200606.comb.align.crop.fits.coords 200606.comb.align.crop.fits.limmag.mag.1
+phot 200610.comb.align.crop.fits.hot-sub.crop.fits 200610.comb.align.crop.fits.coords 200610.comb.align.crop.fits.limmag.mag.1
+phot 200709.comb.align.crop.fits.hot-sub.crop.fits 200709.comb.align.crop.fits.coords 200709.comb.align.crop.fits.limmag.mag.1
+txdump 200107.comb.align.crop.fits.limmag.mag.1 stdev,nsky,area yes > 200107.comb.align.crop.fits.limmag.par
+txdump 200306.comb.align.crop.fits.limmag.mag.1 stdev,nsky,area yes > 200306.comb.align.crop.fits.limmag.par
+txdump 200408.comb.align.crop.fits.limmag.mag.1 stdev,nsky,area yes > 200408.comb.align.crop.fits.limmag.par
+txdump 200411.comb.align.crop.fits.limmag.mag.1 stdev,nsky,area yes > 200411.comb.align.crop.fits.limmag.par
+txdump 200606.comb.align.crop.fits.limmag.mag.1 stdev,nsky,area yes > 200606.comb.align.crop.fits.limmag.par
+txdump 200610.comb.align.crop.fits.limmag.mag.1 stdev,nsky,area yes > 200610.comb.align.crop.fits.limmag.par
+txdump 200709.comb.align.crop.fits.limmag.mag.1 stdev,nsky,area yes > 200709.comb.align.crop.fits.limmag.par
+!paste psfcomb.crop.list psfcomb.crop.list | sed 's/^/paste /' | sed 's/\t/.limmag.gaintime /' | sed "s/$/.limmag.par | sed 's\/^\/limmag 3.0 25.0 \/' | sed 's\/$\/ >> final2006gylimmagcomb.crop.unnamed.list'\//" | sed 's/  //g' > limmagcomb.prepare.script
+!. limmagcomb.prepare.script | sed 's/\t/ /g' | sed 's/  / /g' > limmagcomb.crop.script
+cl < limmagcomb.crop.script
+logout
+perl limmagdeltacalculatorcomb.crop.pl
+gedit final2006gylimmagcomb.crop.list &
+
+
+
+
+
+
+
+
+
+
+
+%%%%%
+%
+%
+%%%%%
+%
+%
+%%%%%
+
+
+
+
+%%%initial stuff for new data files
+
+cp /home/cbilinski/database_chris/soft/*.pl .
+cp /home/cbilinski/database_chris/soft/*.cl .
+gzip -d *.Z
+ls *.fts > file.fts.list
+paste file.fts.list file.fts.list | sed 's/^/mv /' | sed 's/fts$/fits/' > rename.initial.script
+. rename.initial.script
+ls *.fits > file.list
+paste file.list file.list | sed 's/^/hselect /' | sed 's/\t/ DATE-OBS yes > /' | sed 's/$/.dateinfo/' > hselectdate.script
+cl
+daophot
+cl < hselectdate.script
+logout
+%put correct  SN name into code
+gedit initialrenamer.pl &
+
+perl initialrenamer.pl
+mkdir /home/cbilinski/database_chris/2006gy/
+cp 2006gy*.fit /home/cbilinski/database_chris/2006gy/
+%%%
+
+
+%%%editing headers in stsdas toolbox headers package of iraf:
+mkdir ref
+%cp ____ ref/
+cd ref
+cl
+sts
+toolbox
+headers
+set editor = emacs
+%eheader ____
+%cntrl+X cntrl+S when done changing e->E in Cdelts and date-obs to '' and flatid to no value
+%%%
+
+
+
+
+%%%Lim mag code version for single images
+make SNcoord.coo from the sn####.addstar.atsn files
+cp /home/cbilinski/database_chris/soft/*.pl .
+cp /home/cbilinski/database_chris/soft/*.cl .
+
+cl
+daophot
+!paste psf.list psf.list | sed 's/^/phot /' | sed 's/\t/.hot-sub.fits SNcoord.coo /' | sed 's/$/.limmag.mag.1/' > limmagphot.script
+cl < limmagphot.script
+cl < txdumplimmagphot.cl
+!paste psf.list psf.list | sed 's/^/hselect /' | sed 's/\t/ CCDGAIN,EXPTIME yes > /' | sed 's/$/.limmag.gaintime/' > hselect.script
+cl < hselect.script
+
+!paste psf.list psf.list | sed 's/^/paste /' | sed 's/\t/.limmag.gaintime /' | sed "s/$/.limmag.par | sed 's\/^\/limmag 3.0 25.0 \/' | sed 's\/$\/ >> final2006gylimmag.unnamed.list'\//" > limmag.prepare.script
+!. limmag.prepare.script | sed 's/\t/ /g' | sed 's/  / /g' > limmagrun.script
+cl < limmagrun.script
+!gedit limmagdeltacalculator.pl
+logout
+perl limmagdeltacalculator.pl
+gedit final2006gylimmag.list &
+
+%%%
+
+
+
+
+%%%Don't seem to actually be using this
+%not on subtracted images:
+
+!paste psf.list psf.list | sed 's/^/phot /' | sed 's/\t/ SNcoord.coo /' | sed 's/$/.nonsub.limmag.mag.1/' > nonsub.limmagphot.script
+cl < nonsub.limmagphot.script
+cl < txdumpnonsublimmagphot.cl
+!paste psf.list psf.list | sed 's/^/hselect /' | sed 's/\t/ CCDGAIN,EXPTIME yes > /' | sed 's/$/.limmag.gaintime/' > hselect.script
+
+
+!paste psf.list psf.list | sed 's/^/paste /' | sed 's/\t/.limmag.gaintime /' | sed "s/$/.nonsub.limmag.par | sed 's\/^\/limmag 3.0 25.0 \/' | sed 's\/$\/ >> nonsub.final2006gylimmag.unnamed.list'\//" > nonsub.limmag.prepare.script
+!. nonsub.limmag.prepare.script | sed 's/\t/ /g' | sed 's/  / /g' > nonsub.limmagrun.script
+cl < nonsub.limmagrun.script\
+logout
+perl nonsub.limmagdeltacalculator.pl
+
+
+
+___________________________________________________________FDR and FAKESTAR CODE__________________________________________________________
+
+
+% Find date of supernova explosion and paste here 
+name: sn2006gy
+date: 2006 09 18
+
+%astrometry.net the template or a good image if that one sucks
+
+%make a list file for all of the images before the supernova and one for all of the images after the supernova (imlim, all images up until 2 months after sn, snpresent all images after SN for 1 year and images 1 month before, presn all images prior to sn and 2 months after)
+cd /home/cbilinski/database_chris/2006gy
+ls 2006gy*.fit > imlim.list
+ls 2006gy*.fit > snpresent.list
+gedit snpresent.list &
+gedit imlim.list &
+
+cp imlim.list presn.list
+
+%%% write a program to do the above steps
+
+%move in code
+cp /home/cbilinski/iraf/login.cl .
+cp /home/cbilinski/database_chris/soft/*.pl .
+cp /home/cbilinski/database_chris/soft/*.cl .
+cp /home/cbilinski/database_chris/soft/fakestarmags.list .
+cp /home/cbilinski/database_chris/soft/sn.addstar* .
+cp /home/cbilinski/database_chris/soft/sex .
+mv sn.addstar sn2006gy.addstar
+mv sn.addstar.atsn sn2006gy.addstar.atsn
+
+%some necessary settings
+bash
+SNROOT=/home/cbilinski
+export SNROOT
+SNPATH=/home/cbilinski/source/bin
+export SNPATH
+SNSEARCH1=/home/cbilinski/source/snsearch
+export SNSEARCH1
+SNSOURCE=/home/cbilinski/source/source
+export SNSOURCE
+echo avery >s1_removemesoitdoesntfail
+
+% align the data images to the template image, edit register.cl, view.cl to have the current SN name
+cl
+cl < register.cl
+cl < register.cl
+ls *.fit.shift.fits > shiftedfiles.list
+% do twice in case it misses the first file the first time
+
+% look at the alignments and decide if they are y(es), +m(edium image but good shifts), n(ot) good shifts, j(unk) for useless images
+!ds9 &
+task $vvv=view.cl
+vvv
+
+%store all of the shifted files as backups and bring only the good shifts back to the operating folder
+logout
+sed 's/.shift.fits//' imlim.list.ans.temp > imlim.list.ans
+grep '  y' imlim.list.ans > imlim.list.yes
+mkdir shiftbackups
+sed  's/  .*/\.shift\.fits shiftbackups\//'  imlim.list.ans | sed 's/^/mv /' > imlim.list.ans.script
+. imlim.list.ans.script
+sed  's/  .*/\.shift\.fits ./'  imlim.list.yes | sed 's/^/cp shiftbackups\//' > imlim.list.yes.script
+. imlim.list.yes.script
+ls *.shift.fits > imlim.needsaligning.temp.list
+sed 's/\.fits$//' imlim.needsaligning.temp.list > imlim.needsaligning.list
+
+%align the images to proper WCS by inverting them
+cl
+wcscopy *.shift.fits ref/new-image.fits
+cl < align.cl
+cp ref/new-image.fits sn.unaligned.fits
+imcopy sn.unaligned.fits[*,-*] sn.fit
+logout
+
+%put in the correct coordinates from the supernova image/coordinates document and run the rotate code on the template image
+cp sn.fit /home/cbilinski/database_chris/soft/rotatecode/sn.fit
+cd /home/cbilinski/database_chris/soft/rotatecode
+gedit rotate.in &
+
+./rotate 
+%put in random coordinates when it asks for X and Y, this doesnt matter
+
+%copy over the usnob catalog values into the operating folder and then run aperture photometry on all of the aligned images
+cd /home/cbilinski/database_chris/2006gy
+cp /home/cbilinski/database_chris/soft/rotatecode/fort.50 .
+cl
+digiphot
+daophot
+phot *.align.fits fort.50
+
+%run psf photometry manually on all of the aligned images
+ls *align.fits > psf.list
+!sed 's/^/display /' psf.list > psf.temp1.list 
+!sed 's/$/ 1/' psf.temp1.list > psf.temp2.list
+!sed 's/^/psf /' psf.list > psf.temp3.list
+!sed 's/$/ default "" default default default interac+/' psf.temp3.list > psf.temp4.list
+!sed 's/$/ default/' psf.temp3.list > psf2.temp.list
+
+!paste psf2.temp.list psf.list > psf2.temp2.list
+!sed 's/\t/ /' psf2.temp2.list | sed 's/$/.pst.1 default default default interac-/' > psf.manual.2.list
+
+!paste psf.temp2.list psf.temp4.list > psf.temp5.list
+!sed 's/\ 1\t/ 1\n/' psf.temp5.list > psf.manual.list
+
+cp psf.manual.list psf.manual.list.copy
+!gedit psf.manual.list &
+!gedit psf.manual.2.list &
+!ds9 &
+
+rm psf.temp*.list
+
+
+log manually fixed ones here:
+display 2006gy_20000605_c.-3861.02.fit.shift.align.fits 1
+psf 2006gy_20000605_c.-3861.02.fit.shift.align.fits default 2006gy_19981227_c.-4386.01.fit.shift.align.fits.pst.1 default default default interac-
+display 2006gy_20060625_c.-1651.01.fit.shift.align.fits 1
+psf 2006gy_20060625_c.-1651.01.fit.shift.align.fits default 2006gy_19981227_c.-4386.01.fit.shift.align.fits.pst.1 default default default interac-
+
+display 2006gy_20090106_c.-0395.01.fit.shift.align.fits 1
+psf 2006gy_20090106_c.-0395.01.fit.shift.align.fits default 2006gy_19981223_c.-4059.01.fit.shift.align.fits.pst.1 default default default interac-
+
+
+
+
+%make sure psf.list and psf.check.list are of the same length and make sure all psf was performed
+logout
+ls *.psf* > psf.check.list
+gedit psf.list &
+gedit psf.check.list &
+
+%run allstar on all of the aligned images to get psf photometry of every star
+cl
+digiphot
+daophot
+allstar *.align.fits
+
+cl < txdump.cl
+!sed 's/^/perl deltacalculator.pl /' psf.list > deltacalculator.script
+logout
+. deltacalculator.script
+
+%ls *.comb.align.fits > combbeforesub.list (i believe this is just psf.list)
+echo monkeys >s1_removemesoitdoesntfail
+csh
+cl
+cl < sub.cl
+cl < sub.cl
+
+%print("cp snsecond.fit s1.fits") | cl
+%print("cp 200204.comb.align.fits s1_001.fits") | cl
+%print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+%print("mv s1_001.shift.conv.fits 200204.comb.align.fits.conv.fits") | cl
+%print("mv s1_001.shift.sub.fits 200204.comb.align.fits.sub.fits") | cl
+%print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 200204.comb.align.fits.hot-sub.fits") | cl
+%This is unnecessary if the template image itself doesnt align well apparently?
+
+%make sure to change the sn below to the current one and also make sure the locations of the addstars is fine
+logout
+paste psf.list psf.list psf.list > addstar.prep.script
+paste psf.list psf.list psf.list > addstar.atsn.prep.script
+sed 's/2010jl/2006gy/g' addstar.temp.pl > addstar.pl
+cp /home/cbilinski/database_chris/soft/default* .
+cl
+digiphot
+daophot
+!perl addstar.pl
+logout
+bash
+
+%remember to change the sn below to the current one
+sed 's/^/perl fakestarsearcher.pl /' psf.list > fakestarsearcher.script
+sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearcher.temp.pl > fakestarsearcher.pl
+. fakestarsearcher.script
+perl limitingmagnitudecalculator.pl
+gedit finallimitingmagnitudes.list &
+
+%detection limit (MDF) and fakestars on sides (MDF)
+
+
+%align all of the images after the supernova date to the template image and then subtract the template from them
+cl
+cl < registersnpresent.cl
+%cl < registersnpresent.cl
+ls *snpresent.shift.fits > snpresent.shift.list
+logout
+echo monkeys >s1_removemesoitdoesntfail
+csh
+cl
+digiphot
+daophot
+cl < subsnpresent.cl
+cl < subsnpresent.cl
+%maybe requires csh before doing subtraction, but actually seemed to work when i last ran it
+
+%edit viewsnpresent.cl to have the current supernova you are working on
+%!gedit viewsnpresent.cl
+%check the aligning process
+!ds9 &
+task $www=viewsnpresent.cl
+www (y(es) (good shift), +m(edimage) (good shift, OK images), n(o)(bad shift, good or OK images), j(unk)(shift might be good or bad, images are junk), l(acking supernova) (no supernova present in subtraction), f(too few stars or too blurred to match position well for a deep image), +s(supernova still there but too weak too reliably use))
+logout
+
+%combine all of the good quality images with the supernova present into a deep supernova image
+grep '  y' snpresent.ans > snpresent.yes
+sed 's/  y.*//g' snpresent.yes > deepsnimages.list
+cl
+cl < deepsncombiner.cl
+
+%update registerdeepsnandtemplate.cl to have the current sn you are working on
+%gedit registerdeepsnandtemplate.cl
+%align the stacked deep supernova image and the template image to each presupernova image in order to preserve the presupernova image data to the best of our ability
+cl
+cl < registerdeepsnandtemplate.cl
+cl < registerdeepsnandtemplate.cl
+
+%(ran twice but would be good to figure out if you have to or not)
+
+ls *.fit.sn.fits > deepsn.temp.list
+!sed 's/\.sn\.fits//g' deepsn.temp.list > deepsn.list
+rm deepsn.temp.list
+ls *.fit.template.fits > template.temp.list
+!sed 's/\.template\.fits//g' template.temp.list > template.list
+rm template.temp.list
+
+%code to automatically check to see if each data image has a deep supernova image and template image to compare to (not necessarily all good looking ones)
+!perl deepsnandtemplateregisterchecker.pl
+
+%need to add some code somewhere or lines here to look manually at deepsntemplate.fits and find the SN location.  Actually probably need to look at one of the subtractions in preparation and run sextractor on it and take those coordinates.
+!ds9 &
+task $zzz=viewdeepandtemplateshift.cl (y(es)-good shift and images, ns-bad shift in the deepsn image, nt-bad shift in the template image, n(o)-bad shift in both, +q(uite) small error in shifts at perifery but central images seem OK, +m(edium) quality image in general, j(unk) image)
+zzz
+logout
+
+bash
+grep '  y' presn.ans > presn.yes
+sed  's/  .*/\.sn\.fits shiftbackups\//'  presn.ans | sed 's/^/mv /' > presn.ans.script
+sed  's/  .*/\.template\.fits shiftbackups\//'  presn.ans | sed 's/^/mv /' >> presn.ans.script
+. presn.ans.script
+sed  's/  .*/\.sn\.fits ./'  presn.yes | sed 's/^/cp shiftbackups\//'  > presn.yes.script
+sed  's/  .*/\.template\.fits ./'  presn.yes | sed 's/^/cp shiftbackups\//'  >> presn.yes.script
+. presn.yes.script
+sed 's/  y.*//g' presn.yes > fdrsub.list
+csh
+echo monkeys >s1_removemesoitdoesntfail
+cl
+digiphot
+daophot
+cl < subfdr.cl
+cl < subfdr.cl
+logout
+
+%%%new phot procedure for FDR instead of sextractor!
+%edit fdrcoordgenerator to have the right coordinates (500-yvalue)
+gedit SNcoord.coo fdrcoordgenerator.pl &
+perl fdrcoordgenerator.pl
+
+paste fdrsub.list fdrsub.list fdrsub.list | sed 's/^/phot /g'  | sed 's/\t/.fdr.hot-sub.fits /' | sed 's/\t/.fdr.coord /'| sed 's/$/.fdr.mag.1/g' > fdrphot.script 
+cl
+daophot
+cl < fdrphot.script
+cl < txdumpfdrphot.cl
+logout
+perl fdrvaluescalculator.pl
+gedit fdrvalues.phot.list &
+
+%still would like to add a sorted version of the fdr file but no big deal
+
+%%%
+
+%new sextractor procedure
+cp /home/cbilinski/database_chris/soft/default* .
+paste fdrsub.list fdrsub.list fdrsub.list | sed 's/^/sex /g' | sed 's/\t/.sn.hot-sub.fits,/' | sed 's/\t/.fdr.hot-sub.fits :cp test.cat /g' | sed 's/$/.fdr.coo/g' | tr ':' '\n' > fdrsex.script
+bash
+. fdrsex.script
+
+csh
+echo monkeys >s1_removemesoitdoesntfail
+cl
+print("rm s1*") | cl
+print("cp ref/new-image.fits s1.fits") | cl
+print("cp deepsntemplate.fits s1_001.fits") | cl
+print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+print("mv s1_001.shift.conv.fits deepsntemplate.fits.conv.fits") | cl
+print("mv s1_001.shift.sub.fits deepsntemplate.fits.sub.fits") | cl
+print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits deepsntemplate.fits.hot-sub.fits") | cl
+logout
+
+cp /home/cbilinski/database_chris/soft/default* .
+sex deepsntemplate.fits.hot-sub.fits
+gedit test.cat &
+ds9 deepsntemplate.fits.hot-sub.fits deepsntemplate.fits &
+
+%find deepsn location and record here:239.707    295.095
+233.508
+%then place these coordinates into the fdrstats.pl code and the sn2006gy.addstar.atsn file with the Y coordinate in the addstar file as 500-Y value
+gedit fdrstats.pl &
+gedit sn2006gy.addstar.atsn &
+gedit addstarcomb.prep.atsn.crop.pl &
+
+sed 's/2010jl/2006gy/g' addstar.atsn.temp.pl > addstar.atsn.pl
+cp /home/cbilinski/database_chris/soft/default* .
+cl
+daophot
+digiphot
+!perl addstar.atsn.pl
+
+%%%
+%%%
+%%%
+%extra attempt at phot code here:\
+cl
+daophot
+phot 2006gy*.addstar.atsn.*.fits SNcoord.coo default
+ls 2006gy*.addstar.atsn.*.fits > addstar.atsn.list
+cl < txdumpphotatsn.cl
+logout
+bash
+sed 's/^/perl fakestarsearcher.atsn.phot.pl /' psf.list > fakestarsearcher.atsn.phot.script
+sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearcher.atsn.phot.temp.pl > fakestarsearcher.atsn.phot.pl
+. fakestarsearcher.atsn.phot.script
+perl limitingmagnitudecalculator.atsn.phot.pl
+gedit finallimitingmagnitudes.atsn.phot.list &
+
+%%%
+%%%
+%%%
+Stopped here for 20zz11A
+
+logout
+bash
+sed 's/^/perl fakestarsearcher.atsn.pl /' psf.list > fakestarsearcher.atsn.script
+
+%remember to change the sn below to the current one
+
+sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearcher.atsn.temp.pl > fakestarsearcher.atsn.pl
+. fakestarsearcher.atsn.script
+perl limitingmagnitudecalculator.atsn.pl
+gedit finallimitingmagnitudes.atsn.list &
+
+%fakestars at sn
+
+perl fdrstats.pl
+gedit fdrvalues.list &
+
+%FDR code
+
+
+
+
+
+%%%%%%  %%%%%%  %%   %%  %%%%%
+%       %    %  % % % %  %    %
+%       %    %  %  %  %  %%%%%
+%       %    %  %     %  %    %
+%       %    %  %     %  %    %
+%%%%%%  %%%%%%  %     %  %%%%%
+
+%Comb stuff starts here
+sed 's/ y.*//' imlim.list.yes | sed 's/ $/.shift.fits/' > imcomb.list.in
+perl combinationorganizer.pl
+%% new organizer code for weikang data
+perl combinationorganizernew.pl
+%%
+cp imcomb.list.out imcomb.list.out.stackuse
+gedit imcomb.list.out.stackuse &
+cl
+cl < stack.cl
+logout
+
+
+
+ls comb*.fit > combold.list
+perl comboldsorter.pl
+%%% new combrenamer for weikang data
+perl combrenamernew.pl
+%%%
+perl combrenamer.pl
+
+ls *.comb.fits | sed 's/.fits$//' > comb.unaligned.list
+cl
+wcscopy *comb.fits ref/new-image.fits
+cl < aligncomb.cl
+logout
+%ds9 *.comb*.align.fits &
+
+%no just use the same template image
+%Pick two templates and put them in the text below
+%cp 201005.comb.align.fits sn.fit
+%cp 201011.comb.align.fits snsecond.fit
+%cp sn.fit /home/cbilinski/database_chris/soft/rotatecode
+%cd /home/cbilinski/database_chris/soft/rotatecode
+%assuming this is all going in one run you should have the same correct coordinates from before
+%gedit rotate.in &
+
+%put in the correct coordinates from the supernova image/coordinates document
+
+%./rotate 
+
+%put in random coordinates when it asks for X and Y, this doesnt matter
+
+%cd /home/cbilinski/database_chris/2006gy
+%cp /home/cbilinski/database_chris/soft/rotatecode/fort.50 .
+cl
+digiphot
+daophot
+phot *.comb.align.fits fort.50
+
+ls *.comb.align.fits > psfcomb.list
+!sed 's/^/display /' psfcomb.list >psfcomb.temp1.list 
+!sed 's/$/ 1/' psfcomb.temp1.list >psfcomb.temp2.list
+!sed 's/^/psf /' psfcomb.list >psfcomb.temp3.list
+!sed 's/$/ default "" default default default interac+/' psfcomb.temp3.list >psfcomb.temp4.list
+
+!sed 's/$/ default/' psfcomb.temp3.list > psfcomb2.temp.list
+!paste psfcomb2.temp.list psfcomb.list > psfcomb2.temp2.list
+!sed 's/\t/ /' psfcomb2.temp2.list | sed 's/$/.pst.1 default default default interac-/' > psfcomb.manual.2.list
+
+
+!paste psfcomb.temp2.list psfcomb.temp4.list >psfcomb.temp5.list
+!sed 's/\ 1\t/ 1\n/' psfcomb.temp5.list >psfcomb.manual.list
+rm psfcomb.temp*.list
+!cp psfcomb.manual.list psfcomb.manual.list.backup
+!gedit psfcomb.manual.list &
+!gedit psfcomb.manual.2.list &
+!ds9 &
+
+%do this before running manual.2.list
+rm *comb*.psf.1.fits
+rm *comb*psg.1
+
+
+%PERFORM PSF time!
+%make sure psf.list and psf.check.list are of the same length and make sure all psf was performed
+
+logout
+ls *comb*.psf* > psfcomb.check.list
+gedit psfcomb.list &
+gedit psfcomb.check.list &
+
+
+%ind we have fakestars on sides (modified data file ), SN location (MDF), FDR @SN , detection limits (MDF)
+%comb we can do SN location limits (MDF), detection limits (MDF), fake stars on sides (MDF) 
+
+cl
+digiphot
+daophot
+allstar *.comb.align.fits
+
+cl < txdumpcomb.cl
+!sed 's/^/perl deltacalculatorcomb.pl /' psfcomb.list > deltacalculatorcomb.script
+logout
+. deltacalculatorcomb.script
+
+
+
+echo monkeys >s1_removemesoitdoesntfail
+csh
+cl
+cl < subcomb.cl
+cl < subcomb.cl
+%print("cp snsecond.fit s1.fits") | cl
+%print("cp 201005.comb.align.fits s1_001.fits") | cl
+%print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+%print("mv s1_001.shift.conv.fits 201005.comb.align.fits.conv.fits") | cl
+%print("mv s1_001.shift.sub.fits 201005.comb.align.fits.sub.fits") | cl
+%print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 201005.comb.align.fits.hot-sub.fits") | cl
+logout
+paste psfcomb.list psfcomb.list psfcomb.list > addstarcomb.prep.script
+
+%make sure to change the sn below to the current one and also make sure the locations of the addstars is fine
+
+sed 's/2010jl/2006gy/g' addstarcomb.temp.pl > addstarcomb.pl
+cp /home/cbilinski/database_chris/soft/default* .
+cl
+daophot
+digiphot
+!perl addstarcomb.pl
+logout
+bash
+sed 's/^/perl fakestarsearchercomb.pl /' psfcomb.list > fakestarsearchercomb.script
+%remember to change the sn below to the current one
+sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearchercomb.temp.pl > fakestarsearchercomb.pl
+. fakestarsearchercomb.script
+
+perl limitingmagnitudecalculatorcomb.pl
+gedit finallimitingmagnitudescomb.list &
+
+%find SN location using deepsntemplate probably.  do add fakestars on SN location in combs
+
+paste psfcomb.list psfcomb.list psfcomb.list > addstarcomb.atsn.prep.script
+%make sure to change the sn below to the current one and also make sure the locations of the addstars is fine
+
+sed 's/2010jl/2006gy/g' addstarcomb.atsn.temp.pl > addstarcomb.atsn.pl
+cp /home/cbilinski/database_chris/soft/default* .
+cl
+daophot
+digiphot
+!perl addstarcomb.atsn.pl
+logout
+bash
+sed 's/^/perl fakestarsearchercomb.atsn.pl /' psfcomb.list > fakestarsearchercomb.atsn.script
+
+%remember to change the sn below to the current one
+
+sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearchercomb.atsn.temp.pl > fakestarsearchercomb.atsn.pl
+. fakestarsearchercomb.atsn.script
+perl limitingmagnitudecalculatorcomb.atsn.pl
+gedit finallimitingmagnitudescomb.atsn.list &
+
+
+
+
+
+
+ls *.comb.align.fits | sed 's/.comb.*//' > combdates.list
+ls *comb.align.fits > imcopy.list
+paste imcopy.list imcopy.list | sed 's/^/imcopy /' | sed 's/\t/[101:400,101:400] /' | sed 's/.fits$/.crop.fits/' > imcopy.script
+paste imcopy.list | sed 's/^/imcopy sn.fit[101:400,101:400] sn.crop./' | sed 's/\t//' | sed 's/\.comb\.align//' > cropsn.script
+paste combdates.list | sed 's/$/\t[101:400,101:400]/' > addstar.crop.list
+cl
+cl < imcopy.script
+cl < cropsn.script
+!sed 's/.fits/.crop.fits/' psfcomb.list > psfcomb.crop.list
+logout
+
+
+
+%ls *.comb.align.fits > combbeforesub.list
+
+
+%ls *.comb.align.fits | sed 's/.comb.*//' > combdates.list
+%sed 's/2006gy/2006gy/' cropview.temp.cl > cropview.cl
+%cl
+%task $ccc=cropview.cl
+%!ds9 &
+%ccc
+%Using faster method hopefully!
+%cl < crop.script
+%cl < cropsn.script
+%paste combdates.list crop.coords > addstar.crop.list
+sed 's/.fits/.crop.fits/' psfcomb.list > psfcomb.crop.list
+%logout
+
+echo monkeys >s1_removemesoitdoesntfail
+csh
+cl
+cl < subcomb.crop.cl
+cl < subcomb.crop.cl
+logout
+paste psfcomb.crop.list psfcomb.crop.list psfcomb.crop.list > addstarcomb.atsn.crop.prep.script
+%put in correct coordinates
+
+%change the 2006gy to sn below and make sure to put in the new correct coords from sn####LL.addstar.atsn
+gedit addstarcomb.prep.atsn.crop.pl &
+gedit sn2006gy.addstar.atsn &
+
+%%
+change SN name inside the file below before running and change the coordinates based on snXXXXXX.addstar.atsn
+gedit addstarcomb.prep.atsn.crop.pl &
+rm *crop.fits.addstar.atsn.crop.*
+%%
+perl addstarcomb.prep.atsn.crop.pl
+% THE SN COORDINATES HAVE A TRAILING 0 IN THE ABOVE FILE?  IF SO CHANGE IT SLIGHTLY SO IT RECORDS ALL VALUES IN THE SN.ADDSTAR FILE!
+
+%cp sn2006gy.addstar.atsn sn2006gy.addstar.atsn.crop
+%gedit sn2006gy.addstar.atsn.crop &
+
+sed 's/2010jl/2006gy/g' addstarcomb.atsn.crop.temp.pl > addstarcomb.atsn.crop.pl
+cp /home/cbilinski/database_chris/soft/default* .
+cl
+digiphot
+daophot
+!perl addstarcomb.atsn.crop.pl
+
+%%%
+logout
+ls *align.crop.fits.addstar.atsn.crop*.fits > alignedcropsub.list
+%edit the file below to have the current SN
+gedit cropcoordlistgenerator.pl &
+perl cropcoordlistgenerator.pl
+paste alignedcropsub.list alignedcropsub.list | sed 's/^/phot /' | sed 's/\t/ /' |sed 's/$/\.coords default/' > cropphotatsn.script
+
+sed 's/^/perl fakestarsearchercomb.atsn.crop.phot.pl /' psfcomb.crop.list > fakestarsearchercomb.atsn.crop.phot.script
+% may have to gedit the file below if 2006gy was changed from the initial replace command here
+sed 's/sn2003dv\.addstar/sn2006gy.addstar/' fakestarsearchercomb.atsn.crop.phot.temp.pl > fakestarsearchercomb.atsn.crop.phot.pl
+.  fakestarsearchercomb.atsn.crop.phot.script
+
+perl limitingmagnitudecalculatorcomb.atsn.crop.phot.pl
+gedit finallimitingmagnitudescomb.atsn.crop.phot.list &
+%%%
+
+
+logout
+bash
+sed 's/^/perl fakestarsearchercomb.atsn.crop.pl /' psfcomb.crop.list > fakestarsearchercomb.atsn.crop.script
+
+sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearchercomb.atsn.crop.temp.pl > fakestarsearchercomb.atsn.crop.pl
+perl fakestarsearchercomb.atsn.crop.pl
+perl limitingmagnitudecalculatorcomb.atsn.crop.pl
+gedit finallimitingmagnitudescomb.atsn.crop.list &
+
+
+
+%%% exptime code
+cl
+daophot
+cl < exptimestack.cl
+ls exptime.comb* > exptime.list
+%%%
+!perl exptimecombrenamernew.pl
+!perl exptimecombcalculatornew.pl
+%%%
+
+!perl exptimecombrenamer.pl
+!perl exptimecombcalculator.pl
+%%%
+
+
+
+
+
+%%% make new comb limmag code here, put in correct SN name
+!gedit cropcoordlimmaggenerator.pl
+!perl cropcoordlimmaggenerator.pl
+!paste psfcomb.crop.list psfcomb.crop.list psfcomb.crop.list | sed 's/^/phot /' | sed 's/\t/.hot-sub.crop.fits /' | sed 's/  //g' | sed 's/\t/.coords /' | sed 's/$/.limmag.mag.1/' > limmagphotcomb.crop.script
+cl < limmagphotcomb.crop.script
+cl < txdumplimmagphotcomb.crop.cl
+
+!paste psfcomb.crop.list psfcomb.crop.list | sed 's/^/paste /' | sed 's/\t/.limmag.gaintime /' | sed "s/$/.limmag.par | sed 's\/^\/limmag 3.0 25.0 \/' | sed 's\/$\/ >> final2006gylimmagcomb.crop.unnamed.list'\//" | sed 's/  //g' > limmagcomb.prepare.script
+!. limmagcomb.prepare.script | sed 's/\t/ /g' | sed 's/  / /g' > limmagcomb.crop.script
+cl < limmagcomb.crop.script
+!gedit limmagdeltacalculatorcomb.crop.pl
+logout
+perl limmagdeltacalculatorcomb.crop.pl
+gedit final2006gylimmagcomb.crop.list &
+
+%%
+
+
+
+
+
+%%%
+
+
+
+
+
+
+
+200201.comb.align.crop.fits.addstar.atsn.crop.21.0.
+
+
+65:500
+65:500
+ls *comb.align.fits > imcopy.list
+paste imcopy.list imcopy.list | sed 's/^/imcopy /' | sed 's/\t/[65:500,65:500] /' | sed 's/.fits$/.crop.fits/' > imcopy.script
+cl
+cl < imcopy.script
+imcopy sn.fit[65:500,65:500] sn.crop.fit
+!sed 's/.fits/.crop.fits/' psfcomb.list > psfcomb.crop.list
+logout
+
+echo monkeys >s1_removemesoitdoesntfail
+csh
+cl
+cl < subcomb.crop.cl
+%print("cp snsecond.fit s1.fits") | cl
+%print("cp 201005.comb.align.fits s1_001.fits") | cl
+%print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+%print("mv s1_001.shift.conv.fits 201005.comb.align.fits.conv.fits") | cl
+%print("mv s1_001.shift.sub.fits 201005.comb.align.fits.sub.fits") | cl
+%print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 201005.comb.align.fits.hot-sub.fits") | cl
+%logout
+%paste psfcomb.crop.list psfcomb.crop.list psfcomb.crop.list > addstarcomb.crop.prep.script
+
+%make sure to change the sn below to the current one and also make sure the locations of the addstars is fine
+
+%sed 's/2006gy/2006gy/g' addstarcomb.crop.temp.pl > addstarcomb.crop.pl
+%cp /home/cbilinski/database_chris/soft/default* .
+%cl
+%daophot
+%digiphot
+%!perl addstarcomb.crop.pl
+%logout
+%bash
+%sed 's/^/perl fakestarsearchercomb.pl /' psfcomb.list > fakestarsearchercomb.script
+%remember to change the sn below to the current one
+%sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearchercomb.temp.pl > fakestarsearchercomb.pl
+%. fakestarsearchercomb.script
+
+%perl limitingmagnitudecalculatorcomb.pl
+%gedit finallimitingmagnitudescomb.list &
+
+%find SN location using deepsntemplate probably.  do add fakestars on SN location in combs
+
+paste psfcomb.crop.list psfcomb.crop.list psfcomb.crop.list > addstarcomb.atsn.crop.prep.script
+%make sure to change the sn below to the current one and also make sure the locations of the addstars is fine
+
+cp sn2006gy.addstar.atsn sn2006gy.addstar.atsn.crop
+gedit sn2006gy.addstar.atsn.crop &
+
+sed 's/2006gy/2006gy/g' addstarcomb.atsn.crop.temp.pl > addstarcomb.atsn.crop.pl
+cp /home/cbilinski/database_chris/soft/default* .
+cl
+daophot
+
+digiphot
+!perl addstarcomb.atsn.crop.pl
+logout
+bash
+sed 's/^/perl fakestarsearchercomb.atsn.crop.pl /' psfcomb.crop.list > fakestarsearchercomb.atsn.crop.script
+
+%remember to change the sn below to the current one
+
+
+sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearchercomb.atsn.crop.temp.pl > fakestarsearchercomb.atsn.crop.pl
+. fakestarsearchercomb.atsn.crop.script
+perl limitingmagnitudecalculatorcomb.atsn.crop.pl
+gedit finallimitingmagnitudescomb.atsn.crop.list &
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%need to make a generic addstar file by copying the working 2006gy one back DONE!!! but REMEMBER OLD DATA SETS ALREADY RUN NEED TO RERUN SOME OF THE OLD CODE AREAS IN ORDER TO DO THESE LAST STEPS!
+
+
+
+
+
+%now look through the ones with abs(value) > 0.5ish and see if you can explain the problem to the right of the numbers, at least write something to show that you looked at it
+%what actual image files do i open up?--make a note here so it goes faster for future ones
+
+
+
+
+
+
+
+___________________________________________________________UNUSED CODE_______________________________________________________
+
+%%%%%% random other stuff, ignore for now
+sed 's///'codetodomagicfinding
+
+%coordinates stored in *.fdr.coo.  need to read through coordinate file, read in transform, read in SN location -> new sn location and search through file for this location
+%DEFAULT.SEX WAS CHANGED TO SIGMA = 5!!!
+
+need to read sextractor output, have #### to be replaced by sed with location of supernova, read in jtxform.out
+
+
+%%% extra codes?
+wcscopy *snpresent.shift.fits ref/new-image.fits
+ls *snpresent.shift.fits.hot* > snpresent.sub.list
+
+
+
+%ignore the following block--it's for a method that won't work properly
+%ls *.comb.fits > ds9align.list
+%paste ds9align.list ds9align.list > ds9align.list.pasted
+%sed 's/.fits\t/.fits -align -saveimage fits /' ds9align.list.pasted |sed 's/^/ds9 /' | sed 's/.fits$/.align.fits -exit/' > ds9align.script
+%ls *.comb.fits > headernames.list
+%ls *.comb.align.fits > imagenames.list
+%sed 's/comb/final/' headernames.list > finalnames.list 
+
+%CANNOT DO AUTOMATIC PSF BECAUSE PST FILE MATTERS FOR EACH ONE, MAGNITUDE BASED OFF IT! perform psf on first one.  rm *.psf* rm *.psg*
+%rm *.psf*
+%rm *.psg*
+%!sed 's/^/cp 199812.comb.align.fits.pst.1 /' psf.list >psf.automatic.temp1.script
+%!sed 's/$/.pst.1 /' psf.automatic.temp1.script >psf.automatic.script
+
+%%% magic remove command is rm *.fits.addstar.20.0*
+
+
+
+
+%changed in the consolidation process:
+
+
+%sed  's/  .*/\.shift\.fits ./'  imlim.list.yes | sed 's/^/cp shiftbackups\//'  | perl -p -e 's/(_chris\/\d{4}\w{0,2})/$1\/shiftbackups/g;' > imlim.list.yes.script
+
+
+Preparation:replace template with the new template and SN name with the new SN name
+
+xgterm &
+% Find date of supernova explosion and coordinates and paste here (coordinates near rotate code section):
+sn2006gy
+date: 2008 01 02
+% astrometry.net get new-image.fits with correct wcs (http://nova.astrometry.net/upload)
+% Remove all images at least 2 months after explosion date from flist
+cd /home/cbilinski/database_chris/2006gy
+gedit flist &
+
+cp /home/cbilinski/iraf/login.cl .
+cp /home/cbilinski/database_chris/soft/*.pl .
+cp /home/cbilinski/database_chris/soft/*.cl .
+cp /home/cbilinski/database_chris/soft/fakestarmags.list .
+cp /home/cbilinski/database_chris/soft/sn.addstar .
+mv sn.addstar sn2006gy.addstar
+cp /home/cbilinski/database_chris/soft/sex .
+perl doubledateremover.pl
+sed 's/\/raid\/h31\/whale\/weidong\/database\/data_chris/\/home\/cbilinski\/database_chris/' <flist.doubledateremoved >flist_chris
+sed 's/database\/data_chris/home\/cbilinski\/database_chris/' <register.cl >register_inc1.cl
+sed 's/flist/flist_chris/' register_inc1.cl >register_chris.temp1.cl
+sed 's/ref/2006gy\/ref/' register_chris.temp1.cl >register_chris.temp2.cl
+sed 's/sn2011ef\.fit/new-image.fits/' register_chris.temp2.cl >register_chris.cl
+rm register_chris.temp*.cl
+SNROOT=/home/cbilinski
+export SNROOT
+SNPATH=/home/cbilinski/source/bin
+export SNPATH
+SNSEARCH1=/home/cbilinski/source/snsearch
+export SNSEARCH1
+SNSOURCE=/home/cbilinski/source/source
+export SNSOURCE
+echo monkeys >s1_removemesoitdoesntfail
+cl
+cl < register_chris.cl
+cl < register_chris.cl
+logout
+cp /home/cbilinski/database_chris/sn2011ef/view.cl .
+sed 's/ref\/sn2011ef\.fit/2006gy\/ref\/new-image.fits/' <view.cl >view_chris.cl
+ds9 &
+cl
+task $vvv=view_chris.cl
+vvv
+
+% Answer all of the shift questions which end up stored in flist.ans without any spaces in the response (eg. seeing_too_bad)
+
+logout
+grep '  y' flist.ans > flist.yes
+mkdir shiftbackups
+sed  's/  .*/\.shift\.fits shiftbackups\//'  flist.ans | sed 's/\/home/mv \/home/' > flist.ans.script
+. flist.ans.script
+sed  's/  .*/\.shift\.fits ./'  flist.yes | sed 's/\/home/cp \/home/'  | perl -p -e 's/(_chris\/\d{4}\w{0,2})/$1\/shiftbackups/g;' > flist.yes.script
+. flist.yes.script
+sed 's/  .*/\.shift\.fits/' flist.yes > flist.yes.perlinput
+perl combinationorganizer.pl
+cl
+cl < stack.cl
+logout
+ls comb*.fit > combold.list
+perl comboldsorter.pl
+perl combrenamer.pl
+ls *.comb.fits > comb.needaligning
+sed 's/.fits//' comb.needaligning > comb.needaligning.list
+cl
+wcscopy *.comb.fits ref/new-image.fits
+cl < align.cl
+logout
+ds9 *.comb.align.fits &
+
+%choose a comb template, rename it to sn.fit and a 2nd template and name it snsecond.fit, also place the names of the templates in the snsecond sub code below
+
+cp 200204.comb.align.fits sn.fit
+cp 200205.comb.align.fits snsecond.fit
+cp sn.fit /home/cbilinski/database_chris/soft/rotatecode
+cd /home/cbilinski/database_chris/soft/rotatecode
+gedit rotate.in &
+
+%put in the correct coordinates from the supernova image/coordinates document
+
+15:02:43.65
++23:20:07.8
+
+./rotate 
+
+%put in random coordinates when it asks for X and Y, this doesnt matter
+
+cd /home/cbilinski/database_chris/2006gy
+cp /home/cbilinski/database_chris/soft/rotatecode/fort.50 .
+cl
+digiphot
+daophot
+phot *.comb.align.fits fort.50
+
+ls *.comb.align.fits > psf.list
+!sed 's/^/display /' psf.list >psf.temp1.list 
+!sed 's/$/ 1/' psf.temp1.list >psf.temp2.list
+!sed 's/^/psf /' psf.list >psf.temp3.list
+!sed 's/$/ default "" default default default interac+/' psf.temp3.list >psf.temp4.list
+!paste psf.temp2.list psf.temp4.list >psf.temp5.list
+!sed 's/\ 1\t/ 1\n/' psf.temp5.list >psf.manual.list
+rm psf.temp*.list
+!gedit psf.manual.list &
+!ds9 &
+
+%PERFORM PSF time!
+%make sure psf.list and psf.check.list are of the same length and make sure all psf was performed
+
+logout
+ls *.psf* > psf.check.list
+gedit psf.list &
+gedit psf.check.list &
+
+cl
+digiphot
+daophot
+allstar *.comb.align.fits
+
+cl < txdump.cl
+!sed 's/^/perl deltacalculator.pl /' psf.list > deltacalculator.script
+logout
+. deltacalculator.script
+ls *.comb.align.fits > combbeforesub.list
+echo monkeys >s1_removemesoitdoesntfail
+csh
+cl
+cl < sub.cl
+print("cp snsecond.fit s1.fits") | cl
+print("cp 200204.comb.align.fits s1_001.fits") | cl
+print("!/home/cbilinski/source/snsearch/subtract.pl s1.fits s1_001.fits") | cl
+print("mv s1_001.shift.conv.fits 200204.comb.align.fits.conv.fits") | cl
+print("mv s1_001.shift.sub.fits 200204.comb.align.fits.sub.fits") | cl
+print("!/home/cbilinski/database_chris/soft/hotpants1 s1.fits s1_001.shift.fits 200204.comb.align.fits.hot-sub.fits") | cl
+logout
+paste psf.list psf.list psf.list > addstar.prep.script
+%make sure to change the sn below to the current one and also make sure the locations of the addstars is fine
+sed 's/2006gy/2006gy/g' addstar.temp.pl >addstar.pl
+cp /home/cbilinski/database_chris/soft/default* .
+
+cl
+daophot
+digiphot
+!perl addstar.pl
+logout
+bash
+sed 's/^/perl fakestarsearcher.pl /' psf.list > fakestarsearcher.script
+%remember to change the sn below to the current one
+sed 's/sn\.addstar/sn2006gy.addstar/' fakestarsearcher.temp.pl > fakestarsearcher.pl
+. fakestarsearcher.script
+perl limitingmagnitudecalculator.pl
+gedit finallimitingmagnitudes.list &
+
+
+%comments moved to the bottom for smoothness of code:
+%%run again because first file has an issue for some reason
+%%use imexam to find out the FWHM and sigma levels (commands: m for stddev and r for radial profile ->FWHM).
+%%the above uses a different template for the one that is a template for all of the rest of the images (the numbered comb.fits file is the sn.fit file)
+%%look at the images and make sure the fakestar wont hit a large star's residuals
+%%make sure verify critical parameters in epar addstar is set to: no
+
+%sed  's/  .*/\.shift\.fits ./'  imlim.list.yes | sed 's/^/cp shiftbackups\//'  | perl -p -e 's/(_chris\/\d{4}\w{0,2})/$1\/shiftbackups/g;' > imlim.list.yes.script
+
+
+
+
+
+
+
+
+
+
+
+
+
+

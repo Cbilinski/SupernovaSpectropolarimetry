@@ -1,0 +1,60 @@
+[bbodyfitflux20140310,bbodywav20140310, bestT20140310, bestalpha20140310,flux_bbodysub20140310] = blackbodyfit(d20140310_sn2014ab_1(1,:),d20140310_sn2014ab_1(2,:),'blackbody_20140310_sn2014ab');
+[bbodyfitflux20140324,bbodywav20140324, bestT20140324, bestalpha20140324,flux_bbodysub20140324] = blackbodyfit(d20140324_sn2014ab_1(1,:),d20140324_sn2014ab_1(2,:),'blackbody_20140324_sn2014ab');
+[bbodyfitflux20140329,bbodywav20140329, bestT20140329, bestalpha20140329,flux_bbodysub20140329] = blackbodyfit(d20140329_sn2014ab_1(1,:),d20140329_sn2014ab_1(2,:),'blackbody_20140329_sn2014ab');
+[bbodyfitflux20140330,bbodywav20140330, bestT20140330, bestalpha20140330,flux_bbodysub20140330] = blackbodyfit(d20140330_sn2014ab_1(1,:),d20140330_sn2014ab_1(2,:),'blackbody_20140330_sn2014ab');
+[bbodyfitflux20140331,bbodywav20140331, bestT20140331, bestalpha20140331,flux_bbodysub20140331] = blackbodyfit(d20140331_sn2014ab_1(1,:),d20140331_sn2014ab_1(2,:),'blackbody_20140331_sn2014ab');
+[bbodyfitflux20140402,bbodywav20140402, bestT20140402, bestalpha20140402,flux_bbodysub20140402] = blackbodyfit(d20140402_sn2014ab_1(1,:),d20140402_sn2014ab_1(2,:),'blackbody_20140402_sn2014ab');
+[bbodyfitflux20140408,bbodywav20140408, bestT20140408, bestalpha20140408,2flux_bbodysub20140408] = blackbodyfit(d20140408_sn2014ab_1(1,:),d20140408_sn2014ab_1(2,:),'blackbody_20140408_sn2014ab');
+[bbodyfitflux20140409,bbodywav20140409, bestT20140409, bestalpha20140409,flux_bbodysub20140409] = blackbodyfit(d20140409_sn2014ab_1(1,:),d20140409_sn2014ab_1(2,:),'blackbody_20140409_sn2014ab');
+[bbodyfitflux20140411,bbodywav20140411, bestT20140411, bestalpha20140411,flux_bbodysub20140411] = blackbodyfit(d20140411_sn2014ab_1(1,:),d20140411_sn2014ab_1(2,:),'blackbody_20140411_sn2014ab');
+[bbodyfitflux20140420,bbodywav20140420, bestT20140420, bestalpha20140420,flux_bbodysub20140420] = blackbodyfit(d20140420_sn2014ab_1(1,:),d20140420_sn2014ab_1(2,:),'blackbody_20140420_sn2014ab');
+[bbodyfitflux20140423,bbodywav20140423, bestT20140423, bestalpha20140423,flux_bbodysub20140423] = blackbodyfit(d20140423_sn2014ab_1(1,:),d20140423_sn2014ab_1(2,:),'blackbody_20140423_sn2014ab');
+[bbodyfitflux20140426,bbodywav20140426, bestT20140426, bestalpha20140426,flux_bbodysub20140426] = blackbodyfit(d20140426_sn2014ab_1(1,:),d20140426_sn2014ab_1(2,:),'blackbody_20140426_sn2014ab');
+[bbodyfitflux20140427,bbodywav20140427, bestT20140427, bestalpha20140427,flux_bbodysub20140427] = blackbodyfit(d20140427_sn2014ab_1(1,:),d20140427_sn2014ab_1(2,:),'blackbody_20140427_sn2014ab');
+[bbodyfitflux20140428,bbodywav20140428, bestT20140428, bestalpha20140428,flux_bbodysub20140428] = blackbodyfit(d20140428_sn2014ab_1(1,:),d20140428_sn2014ab_1(2,:),'blackbody_20140428_sn2014ab');
+[bbodyfitflux20140430,bbodywav20140430, bestT20140430, bestalpha20140430,flux_bbodysub20140430] = blackbodyfit(d20140430_sn2014ab_1(1,:),d20140430_sn2014ab_1(2,:),'blackbody_20140430_sn2014ab');
+[bbodyfitflux20140501,bbodywav20140501, bestT20140501, bestalpha20140501,flux_bbodysub20140501] = blackbodyfit(d20140501_sn2014ab_1(1,:),d20140501_sn2014ab_1(2,:),'blackbody_20140501_sn2014ab');
+[bbodyfitflux20140507,bbodywav20140507, bestT20140507, bestalpha20140507,flux_bbodysub20140507] = blackbodyfit(d20140507_sn2014ab_4(1,:),d20140507_sn2014ab_4(2,:),'blackbody_20140507_sn2014ab');
+[bbodyfitflux20140519,bbodywav20140519, bestT20140519, bestalpha20140519,flux_bbodysub20140519] = blackbodyfit(d20140519_sn2014ab_1(1,:),d20140519_sn2014ab_1(2,:),'blackbody_20140519_sn2014ab');
+[bbodyfitflux20140522,bbodywav20140522, bestT20140522, bestalpha20140522,flux_bbodysub20140522] = blackbodyfit(d20140522_sn2014ab_1(1,:),d20140522_sn2014ab_1(2,:),'blackbody_20140522_sn2014ab');
+[bbodyfitflux20140523,bbodywav20140523, bestT20140523, bestalpha20140523,flux_bbodysub20140523] = blackbodyfit(d20140523_sn2014ab_1(1,:),d20140523_sn2014ab_1(2,:),'blackbody_20140523_sn2014ab');
+[bbodyfitflux20140524,bbodywav20140524, bestT20140524, bestalpha20140524,flux_bbodysub20140524] = blackbodyfit(d20140524_sn2014ab_1(1,:),d20140524_sn2014ab_1(2,:),'blackbody_20140524_sn2014ab');
+[bbodyfitflux20140526,bbodywav20140526, bestT20140526, bestalpha20140526,flux_bbodysub20140526] = blackbodyfit(d20140526_sn2014ab_1(1,:),d20140526_sn2014ab_1(2,:),'blackbody_20140526_sn2014ab');
+[bbodyfitflux20140526_2,bbodywav20140526_2, bestT20140526_2, bestalpha20140526_2,flux_bbodysub20140526_2] = blackbodyfit(d20140526_sn2014ab_2(1,:),d20140526_sn2014ab_2(2,:),'blackbody_20140526_sn2014ab_2');
+[bbodyfitflux20140528,bbodywav20140528, bestT20140528, bestalpha20140528,flux_bbodysub20140528] = blackbodyfit(d20140528_sn2014ab_1(1,:),d20140528_sn2014ab_1(2,:),'blackbody_20140528_sn2014ab');
+[bbodyfitflux20140602,bbodywav20140602, bestT20140602, bestalpha20140602,flux_bbodysub20140602] = blackbodyfit(d20140602_sn2014ab_1(1,:),d20140602_sn2014ab_1(2,:),'blackbody_20140602_sn2014ab');
+[bbodyfitflux20140621,bbodywav20140621, bestT20140621, bestalpha20140621,flux_bbodysub20140621] = blackbodyfit(d20140621_sn2014ab_1(1,:),d20140621_sn2014ab_1(2,:),'blackbody_20140621_sn2014ab');
+[bbodyfitflux20140622,bbodywav20140622, bestT20140622, bestalpha20140622,flux_bbodysub20140622] = blackbodyfit(d20140622_sn2014ab_1(1,:),d20140622_sn2014ab_1(2,:),'blackbody_20140622_sn2014ab');
+[bbodyfitflux20140623,bbodywav20140623, bestT20140623, bestalpha20140623,flux_bbodysub20140623] = blackbodyfit(d20140623_sn2014ab_1(1,:),d20140623_sn2014ab_1(2,:),'blackbody_20140623_sn2014ab');
+[bbodyfitflux20140624,bbodywav20140624, bestT20140624, bestalpha20140624,flux_bbodysub20140624] = blackbodyfit(d20140624_sn2014ab_1(1,:),d20140624_sn2014ab_1(2,:),'blackbody_20140624_sn2014ab');
+[bbodyfitflux20140626,bbodywav20140626, bestT20140626, bestalpha20140626,flux_bbodysub20140626] = blackbodyfit(d20140626_sn2014ab_1(1,:),d20140626_sn2014ab_1(2,:),'blackbody_20140626_sn2014ab');
+[bbodyfitflux20140630,bbodywav20140630, bestT20140630, bestalpha20140630,flux_bbodysub20140630] = blackbodyfit(d20140630_sn2014ab_1(1,:),d20140630_sn2014ab_1(2,:),'blackbody_20140630_sn2014ab');
+[bbodyfitflux20140722,bbodywav20140722, bestT20140722, bestalpha20140722,flux_bbodysub20140722] = blackbodyfit(d20140722_sn2014ab_1(1,:),d20140722_sn2014ab_1(2,:),'blackbody_20140722_sn2014ab');
+[bbodyfitflux20140722_2,bbodywav20140722_2, bestT20140722_2, bestalpha20140722_2,flux_bbodysub20140722_2] = blackbodyfit(d20140722_sn2014ab_4(1,:),d20140722_sn2014ab_4(2,:),'blackbody_20140722_sn2014ab_2');
+[bbodyfitflux20140808,bbodywav20140808, bestT20140808, bestalpha20140808,flux_bbodysub20140808] = blackbodyfit(d20140808_sn2014ab_1(1,:),d20140808_sn2014ab_1(2,:),'blackbody_20140808_sn2014ab');
+[bbodyfitflux20180414,bbodywav20180414, bestT20180414, bestalpha20180414,flux_bbodysub20180414] = blackbodyfit(d20180414_sn2014ab_1(1,:),d20180414_sn2014ab_1(2,:),'blackbody_20180414_sn2014ab');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[bbodyfit,bbodywav, bestT, bestalpha] = blackbodyfit(d20140310_sn2014ab_1(1,:),d20140310_sn2014ab_1(2,:),3000,7500,'blackbody_20140310_sn2014ab');

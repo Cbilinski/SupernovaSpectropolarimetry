@@ -1,0 +1,54 @@
+%%%%%This code was never finished, its an idea for a quick operation
+
+
+clear all
+close all
+data(1).wave = 0;
+plotting = figure;
+set(gcf,'color','w');
+set(plotting,'units','normalized','outerposition',[0 0 1 1]);
+set(plotting,'PaperUnits','normalized','PaperPosition',[0 0 3 1]);
+set(gcf,'renderer','painters')
+colormap jet
+
+%constants
+lambdaHalpha = 6562.81;
+lambdaHbeta = 4861.35;
+lambdaHeI5876 = 5876;
+c=3*10^10;
+jdtomjd=-2400000.5;
+
+
+%parameters
+contrange = [5100 5700];
+contrange(2,:) = [6000 6300];
+%offsetfactorforMW=5;
+%FWheight=1.2;
+
+%SN info
+z_sn = 
+A_V_sn = 
+A_V_NaID_sn = 
+discoverydatejd_sn = 
+
+%SN name
+%date
+data(end+1).description = ' ';
+data(end).name = 'SN 2018aoq';
+data(end).tel = 'Kuiper';
+data(end).instr = 'SPOL';
+data(end).type = 'IIPLunk';
+[data(end).wave data(end).flux] = textread('..\IIPLunk\sn2018aoq\Kuiper\sn2018aoq_2018-04-06comb.flx.txt','%f%f','delimiter',' ');
+[dump data(end).q] = textread('..\IIPLunk\sn2018aoq\Kuiper\sn2018aoq_2018-04-06comb.q.txt','%f%f','delimiter',' ');
+[dump data(end).qsig] = textread('..\IIPLunk\sn2018aoq\Kuiper\sn2018aoq_2018-04-06comb.qsig.txt','%f%f','delimiter',' ');
+[dump data(end).qsum] = textread('..\IIPLunk\sn2018aoq\Kuiper\sn2018aoq_2018-04-06comb.qsum.txt','%f%f','delimiter',' ');
+[dump data(end).u] = textread('..\IIPLunk\sn2018aoq\Kuiper\sn2018aoq_2018-04-06comb.u.txt','%f%f','delimiter',' ');
+[dump data(end).usig] = textread('..\IIPLunk\sn2018aoq\Kuiper\sn2018aoq_2018-04-06comb.usig.txt','%f%f','delimiter',' ');
+[dump data(end).usum] = textread('..\IIPLunk\sn2018aoq\Kuiper\sn2018aoq_2018-04-06comb.usum.txt','%f%f','delimiter',' ');
+data(end).date =juliandate(2018,04,06);
+data(end).reldate_disc = mean(data(end).date) - discoverydatejd_sn2018aoq;
+%data(end).reldate_peak = mean(data(end).date) - peakmagdatejd_sn2018aoq;
+data(end).wavedez = data(end).wave/(1+z_sn2018aoq);
+data(end).flux = deredden(data(end).wavedez,data(end).flux,A_V_sn2018aoq+A_V_NaID_sn2018aoq);
+data(end).ymdplotlabel = [num2str(datetime(mean(data(end).date),'convertfrom','juliandate').Year),'-',num2str(datetime(mean(data(end).date),'convertfrom','juliandate').Month),'-',num2str(datetime(mean(data(end).date),'convertfrom','juliandate').Day),'-',num2str(datetime(mean(data(end).date),'convertfrom','juliandate').Hour/24)];
+data(end).contrange = [contrange];

@@ -1,0 +1,111 @@
+
+
+
+cd 1999el
+cp finallimitingmagnitudes.atsn.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes1999el.atsn.list
+cp finallimitingmagnitudescomb.atsn.crop.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb1999el.atsn.list
+cp final1999ellimmag.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes1999el.list
+cp final1999ellimmagcomb.crop.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb1999el.list
+cp imcomb.list.out /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/imcomb1999el.list.out
+cd ..
+cd 2003dv
+cp finallimitingmagnitudes.atsn.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes2003dv.atsn.list
+cp finallimitingmagnitudescomb.atsn.crop.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2003dv.atsn.list
+cp final2003dvlimmag.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes2003dv.list
+cp final2003dvlimmagcomb.crop.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2003dv.list
+cp imcomb.list.out /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/imcomb2003dv.list.out
+cd ..
+cd 2006am
+cp finallimitingmagnitudes.atsn.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes2006am.atsn.list
+cp finallimitingmagnitudescomb.atsn.crop.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2006am.atsn.list
+cp final2006amlimmag.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes2006am.list
+cp final2006amlimmagcomb.crop.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2006am.list
+cp imcomb.list.out /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/imcomb2006am.list.out
+cd ..
+cd 2010jl
+cp finallimitingmagnitudes.atsn.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes2010jl.atsn.list
+cp finallimitingmagnitudescomb.atsn.crop.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2010jl.atsn.list
+cp final2010jllimmag.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes2010jl.list
+cp final2010jllimmagcomb.crop.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2010jl.list
+cp imcomb.list.out /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/imcomb2010jl.list.out
+cd ..
+cd 2011A
+cp finallimitingmagnitudes.atsn.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes2011A.atsn.list
+cp finallimitingmagnitudescomb.atsn.crop.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2011A.atsn.list
+cp final2011Alimmag.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes2011A.list
+cp final2011Alimmagcomb.crop.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2011A.list
+cp imcomb.list.out /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/imcomb2011A.list.out
+cd ..
+cd 2008fq
+cp finallimitingmagnitudes.atsn.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes2008fq.atsn.list
+cp finallimitingmagnitudescomb.atsn.crop.phot.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2008fq.atsn.list
+cp final2008fqlimmag.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudes2008fq.list
+cp final2008fqlimmagcomb.crop.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2008fq.list
+cp imcomb.list.out /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/imcomb2008fq.list.out
+cd ..
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+new one for just the new files:
+
+
+
+cd 1999el
+cp finallimitingmagnitudessubcomb.atsn.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb1999el.atsn.list
+cp final1999ellimmagsubcomb.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb1999el.list
+cd ..
+cd 2003dv
+cp finallimitingmagnitudessubcomb.atsn.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2003dv.atsn.list
+cp final2003dvlimmagsubcomb.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2003dv.list
+cd ..
+cd 2006am
+cp finallimitingmagnitudessubcomb.atsn.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2006am.atsn.list
+cp final2006amlimmagsubcomb.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2006am.list
+cd ..
+cd 2010jl
+cp finallimitingmagnitudessubcomb.atsn.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2010jl.atsn.list
+cp final2010jllimmagsubcomb.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2010jl.list
+cd ..
+cd 2011A
+cp finallimitingmagnitudessubcomb.atsn.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2011A.atsn.list
+cp final2011Alimmagsubcomb.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2011A.list
+cd ..
+cd 2008fq
+cp finallimitingmagnitudessubcomb.atsn.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2008fq.atsn.list
+cp final2008fqlimmagsubcomb.list /home/cbilinski/Dropbox/Astrophysics/2ndyearproject/data/finallimitingmagnitudescomb2008fq.list
+cd ..
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

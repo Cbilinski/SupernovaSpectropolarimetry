@@ -1,0 +1,338 @@
+
+
+cd C:/Users/Cbilinski/Dropbox/Astrophysics/Projects/GradSchool/SN2014ab
+ipython --pylab
+import aplpy
+
+
+207.0252083    7.3878111 %SN 2014ab
+207.0250417    7.3876139 %Host galaxy (not used in plots)
+
+
+gc1 = aplpy.FITSFigure('data/nickelfromweikang/2014ab_140325_nickel_astrometrynet.fits')
+gc1.show_grayscale(vmin=1300, vmid=None, vmax=1750, pmin=2.5, pmax=99.5)
+gc1.set_theme('publication')
+gc1.recenter(207.0252083, 7.3878111, radius=0.015)  # degrees
+gc1.show_rectangles(207.0252083, 7.3893111, 0.000001, 0.003,edgecolor='red')
+gc1.show_rectangles(207.0267083, 7.3878111, 0.003, 0.000001,edgecolor='red')
+gc1.add_label(207.0322083, 7.3908111, 'SN 2014ab', size=34, color='red')
+gc1.add_label(207.0200417, 7.3966139, 'MCG +01-35-037', size=28)
+gc1.add_label(207.0232083, 7.3848111, 'VV 306c', size=28)
+gc1.axis_labels.set_font(size=28)
+gc1.tick_labels.set_font(size=24)
+gc1.ticks.set_xspacing(0.01)
+gc1.tick_labels.set_xformat('hh:mm:ss')
+
+gc1.save('figures/SN2014abfinder.eps')
+gc1.save('figures/SN2014abfinder.pdf')
+
+gc1.show_rectangles(207.0252083, 7.3848111, 0.000001, 0.003,edgecolor='green')
+gc1.add_label(207.0242083, 7.3818111, 'VV 306c', size=26)
+
+gc3 = aplpy.FITSFigure('data/rawKuiper/2014ab_20160623_kuiper_astrometrynet.fits')
+gc3.show_grayscale(vmin=1050, vmid=None, vmax=1600, pmin=7.5, pmax=12.5)
+gc3.set_theme('publication')
+gc3.recenter(207.0250417, 7.3876139, radius=0.015)  # degrees
+gc3.add_label(207.0200417, 7.3966139, 'MCG +01-35-037', size=28)
+gc3.add_label(207.0232083, 7.3848111, 'VV 306c', size=28)
+gc3.axis_labels.set_font(size=28)
+gc3.tick_labels.set_font(size=24)
+gc3.ticks.set_xspacing(0.01)
+gc3.tick_labels.set_xformat('hh:mm:ss')
+
+gc3.save('figures/SN2014abKuiperLateFinder.eps')
+gc3.save('figures/SN2014abKuiperLateFinder.pdf')
+
+gc3.show_rectangles(207.0250417,  7.3891139, 0.000001, 0.003,edgecolor='red')
+gc3.show_rectangles(207.0265417, 7.3876139, 0.003, 0.000001,edgecolor='red')
+
+
+
+
+gc4 = aplpy.FITSFigure('data/rawKuiper/2014ab_20160623_kuiper_astrometrynet.fits')
+gc4.show_grayscale(vmin=950, vmid=None, vmax=1600, pmin=7.5, pmax=12.5)
+gc4.set_theme('publication')
+gc4.recenter(207.0250417, 7.3876139, radius=0.015)  # degrees
+gc4.show_rectangles(207.0250417,  7.3891139, 0.000001, 0.003,edgecolor='red')
+gc4.show_rectangles(207.0265417, 7.3876139, 0.003, 0.000001,edgecolor='red')
+gc4.show_rectangles(207.0252083, 7.3893111, 0.000001, 0.003,edgecolor='green')
+gc4.show_rectangles(207.0267083, 7.3878111, 0.003, 0.000001,edgecolor='green')
+gc4.add_label(207.0250417, 7.3976139, 'MCG +01-35-037', size=21)
+gc4.axis_labels.set_font(size=21)
+gc4.tick_labels.set_font(size=16)
+gc4.ticks.set_xspacing(0.01)
+gc4.tick_labels.set_xformat('hh:mm:ss')
+
+
+
+%%with host coordinates used
+
+
+gc5 = aplpy.FITSFigure('data/nickelfromweikang/2014ab_140325_nickel_astrometrynet.fits')
+gc5.show_grayscale(vmin=1200, vmid=None, vmax=1750, pmin=2.5, pmax=99.5)
+gc5.set_theme('publication')
+gc5.recenter(207.0250417, 7.3876139, radius=0.015)  # degrees
+gc5.show_rectangles(207.0250417,  7.3891139, 0.000001, 0.003,edgecolor='red')
+gc5.show_rectangles(207.0265417, 7.3876139, 0.003, 0.000001,edgecolor='red')
+gc5.add_label(207.0250417, 7.3976139, 'SN 2014ab', size=21)
+gc5.axis_labels.set_font(size=21)
+gc5.tick_labels.set_font(size=16)
+gc5.ticks.set_xspacing(0.01)
+gc5.tick_labels.set_xformat('hh:mm:ss')
+
+
+
+
+
+207.0252083-207.0252250
+7.3878111 - 7.3878113
+
+
+
+
+207.0249583    7.3878889
+207.0252250    7.3878113
+
+
+gc1 = aplpy.FITSFigure('data/nickelfromweikang/2014ab_140325_nickel_astrometrynet.fits')
+gc1.show_grayscale(vmin=1200, vmid=None, vmax=1750, pmin=2.5, pmax=99.5)
+gc1.set_theme('publication')
+gc1.recenter(207.0252250, 7.3878113, radius=0.015)  # degrees
+gc1.show_rectangles(207.0252250, 7.3893113, 0.000001, 0.003,edgecolor='red')
+gc1.show_rectangles(207.0267250, 7.3878113, 0.003, 0.000001,edgecolor='red')
+gc1.add_label(207.0252250, 7.3978113, 'SN 2014ab', size=21)
+gc1.axis_labels.set_font(size=21)
+gc1.tick_labels.set_font(size=16)
+gc1.ticks.set_xspacing(0.01)
+gc1.tick_labels.set_xformat('hh:mm:ss')
+
+gc1.save('figures/SN2014abfinder.eps')
+gc1.save('figures/SN2014abfinder.pdf')
+
+
+gc2 = aplpy.FITSFigure('data/nickelfromweikang/140325cfsb_WCScopy.fit')
+gc2.show_grayscale(vmin=5, vmid=None, vmax=500, pmin=2.5, pmax=99.5)
+gc2.set_theme('publication')
+gc2.recenter(207.0249583, 7.3878889, radius=0.015)  # degrees
+gc2.show_rectangles(207.0249583, 7.3893889, 0.000001, 0.003,edgecolor='red')
+gc2.show_rectangles(207.0264583, 7.3878889, 0.003, 0.000001,edgecolor='red')
+gc2.add_label(207.0249583, 7.3978889, 'SN 2014ab', size=21)
+gc2.axis_labels.set_font(size=21)
+gc2.tick_labels.set_font(size=16)
+gc2.ticks.set_xspacing(0.01)
+gc2.tick_labels.set_xformat('hh:mm:ss')
+
+gc2.save('figures/SN2014abfindersub.eps')
+gc2.save('figures/SN2014abfindersub.pdf')
+
+gc3 = aplpy.FITSFigure('data/rawKuiper/2014ab_20160623_kuiper_astrometrynet.fits')
+gc3.show_grayscale(vmin=950, vmid=None, vmax=1600, pmin=7.5, pmax=12.5)
+gc3.set_theme('publication')
+gc3.recenter(207.0252250, 7.3878113, radius=0.015)  # degrees
+gc3.show_rectangles(207.0252250, 7.3893113, 0.000001, 0.003,edgecolor='red')
+gc3.show_rectangles(207.0267250, 7.3878113, 0.003, 0.000001,edgecolor='red')
+gc3.add_label(207.0252250, 7.3978113, 'UGC 8728', size=21)
+gc3.axis_labels.set_font(size=21)
+gc3.tick_labels.set_font(size=16)
+gc3.ticks.set_xspacing(0.01)
+gc3.tick_labels.set_xformat('hh:mm:ss')
+
+gc3.save('figures/SN2014abKuiperLateFinder.eps')
+gc3.save('figures/SN2014abKuiperLateFinder.pdf')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%copied below for backup
+
+
+207.0249583    7.3878889
+
+gc1 = aplpy.FITSFigure('data/nickelfromweikang/2014ab_140325_nickel_astrometrynet.fits')
+gc1.show_grayscale(vmin=1400, vmid=None, vmax=2000, pmin=2.5, pmax=99.5)
+gc1.set_theme('publication')
+gc1.recenter(207.0249583, 7.3878889, radius=0.015)  # degrees
+gc1.show_rectangles(207.0249583, 7.3893889, 0.000001, 0.003,edgecolor='red')
+gc1.show_rectangles(207.0264583, 7.3878889, 0.003, 0.000001,edgecolor='red')
+gc1.add_label(207.0249583, 7.3978889, 'SN 2014ab', size=21)
+gc1.axis_labels.set_font(size=21)
+gc1.tick_labels.set_font(size=16)
+gc1.ticks.set_xspacing(0.01)
+gc1.tick_labels.set_xformat('hh:mm:ss')
+
+gc1.save('figures/SN2014abfinder.eps')
+gc1.save('figures/SN2014abfinder.pdf')
+
+
+gc2 = aplpy.FITSFigure('data/nickelfromweikang/140325cfsb_WCScopy.fit')
+gc2.show_grayscale(vmin=5, vmid=None, vmax=500, pmin=2.5, pmax=99.5)
+gc2.set_theme('publication')
+gc2.recenter(207.0249583, 7.3878889, radius=0.015)  # degrees
+gc2.show_rectangles(207.0249583, 7.3893889, 0.000001, 0.003,edgecolor='red')
+gc2.show_rectangles(207.0264583, 7.3878889, 0.003, 0.000001,edgecolor='red')
+gc2.add_label(207.0249583, 7.3978889, 'SN 2014ab', size=21)
+gc2.axis_labels.set_font(size=21)
+gc2.tick_labels.set_font(size=16)
+gc2.ticks.set_xspacing(0.01)
+gc2.tick_labels.set_xformat('hh:mm:ss')
+
+gc2.save('figures/SN2014abfindersub.eps')
+gc2.save('figures/SN2014abfindersub.pdf')
+
+gc3 = aplpy.FITSFigure('data/rawKuiper/2014ab_20160623_kuiper_astrometrynet.fits')
+gc3.show_grayscale(vmin=500, vmid=None, vmax=2050, pmin=2.5, pmax=99.5)
+gc3.set_theme('publication')
+gc3.recenter(207.0249583, 7.3878889, radius=0.015)  # degrees
+gc3.show_rectangles(207.0249583, 7.3893889, 0.000001, 0.003)
+gc3.show_rectangles(207.0264583, 7.3878889, 0.003, 0.000001)
+gc3.add_label(207.0249583, 7.3978889, 'SN 2014ab', size=21)
+gc3.axis_labels.set_font(size=21)
+gc3.tick_labels.set_font(size=16)
+gc3.ticks.set_xspacing(0.01)
+gc3.tick_labels.set_xformat('hh:mm:ss')
+
+gc3.save('figures/SN2014abKuiperLateFinder.eps')
+gc3.save('figures/SN2014abKuiperLateFinder.pdf')
+
+
+%%%copied above
+
+
+gc1 = aplpy.FITSFigure('Rimage.fits')
+gc1.show_grayscale(vmin=500, vmid=None, vmax=1050, pmin=2.5, pmax=99.5)
+gc1.set_theme('publication')
+gc1.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc1.show_rectangles(185.6983333, 5.60815, 0.000001, 0.0025)
+gc1.show_rectangles(185.6995833, 5.6069, 0.0025, 0.000001)
+gc1.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc1.axis_labels.set_font(size=21)
+gc1.tick_labels.set_font(size=16)
+gc1.ticks.set_xspacing(0.01)
+gc1.tick_labels.set_xformat('hh:mm:ss')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+gc2 = aplpy.FITSFigure('ROTSE120129image.fits')
+gc2.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc2.set_theme('publication')
+gc2.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc2.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc2.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc2.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc2.axis_labels.set_font(size=21)
+gc2.tick_labels.set_font(size=16)
+gc2.ticks.set_xspacing(0.01)
+gc2.tick_labels.set_xformat('hh:mm:ss')
+
+
+gc3 = aplpy.FITSFigure('ROTSE120131image.fits')
+gc3.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc3.set_theme('publication')
+gc3.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc3.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc3.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc3.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc3.axis_labels.set_font(size=21)
+gc3.tick_labels.set_font(size=16)
+gc3.ticks.set_xspacing(0.01)
+gc3.tick_labels.set_xformat('hh:mm:ss')
+
+
+gc4 = aplpy.FITSFigure('ROTSE120203image.fits')
+gc4.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc4.set_theme('publication')
+gc4.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc4.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc4.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc4.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc4.axis_labels.set_font(size=21)
+gc4.tick_labels.set_font(size=16)
+gc4.ticks.set_xspacing(0.01)
+gc4.tick_labels.set_xformat('hh:mm:ss')
+
+gc4.save('SN2012abfinderwithSN.eps')
+gc4.save('SN2012abfinderwithSN.pdf')
+
+
+
+
+gc5 = aplpy.FITSFigure('ROTSE120222image.fits')
+gc5.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc5.set_theme('publication')
+gc5.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc5.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc5.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc5.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc5.axis_labels.set_font(size=21)
+gc5.tick_labels.set_font(size=16)
+gc5.ticks.set_xspacing(0.01)
+gc5.tick_labels.set_xformat('hh:mm:ss')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%old code
+%set the x-line value 
+gc1 = aplpy.FITSFigure('Rimage.fits')
+gc1.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc1.set_theme('publication')
+gc1.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc1.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc1.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc1.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc1.axis_labels.set_font(size=21)
+gc1.tick_labels.set_font(size=19)
+
+gc2 = aplpy.FITSFigure('Rimage.fits')
+gc2.show_grayscale(vmin=600, vmid=None, vmax=850, pmin=2.5, pmax=99.5)
+gc2.set_theme('publication')
+gc2.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc2.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc2.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc2.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc2.axis_labels.set_font(size=21)
+gc2.tick_labels.set_font(size=19)

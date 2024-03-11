@@ -1,5 +1,5 @@
 %comments
-%I believe this was edited some after the PhD work for the 2010jl paper so some of it would need to be altered to rerun the PhD work--especially output and input directories
+%2024-03-11 Current operating version defined in MATLAB
 function [wav1, qRSP_out, uRSP_out, p2_opt_out] = SPOLPlotter(wav1,flx1,q2,u2,date,reldate,name,telescope,numcont,contrange,varargin)
 
 %default values for optional arguments

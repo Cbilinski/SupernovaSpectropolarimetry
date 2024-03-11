@@ -1,0 +1,193 @@
+Nickel image SN center values (from subtraction image):
+446.357 469.937
+WCS values for neighboring pixels:
+446 469: RA: 13:48:06.062  Dec: +07:23:15.768 
+446 470: RA: 13:48:06.063  Dec: +07:23:16.139 
+447 469: RA: 13:48:06.037  Dec: +07:23:15.782 
+447 470: RA: 13:48:06.038  Dec: +07:23:16.153 
+
+Nickel image nearby star center values:
+398.314 441.233
+WCS values for neighboring pixels:
+398 441: RA: 13:48:07.262 Dec: +07:23:04.861 
+398 442: RA: 13:48:07.263 Dec: +07:23:05.232  
+399 441: RA: 13:48:07.237 Dec: +07:23:04.875  
+399 442: RA: 13:48:07.238 Dec: +07:23:05.246  
+
+Kuiper image SN center values:
+929.716 548.135
+WCS values for neighboring pixels:
+929 548: RA: 13:48:06.028  Dec: +07:23:15.352 
+929 549: RA: 13:48:06.028  Dec: +07:23:15.777 
+930 548: RA: 13:48:05.999  Dec: +07:23:15.355 
+930 549: RA: 13:48:06.000  Dec: +07:23:15.779 
+
+Kuiper image nearby star center values:
+885.285 523.921
+WCS values for neighboring pixels:
+885 523: RA: 13:48:07.289  Dec: +07:23:04.617
+885 524: RA: 13:48:07.289  Dec: +07:23:05.041
+886 523: RA: 13:48:07.260  Dec: +07:23:04.619
+886 524: RA: 13:48:07.260  Dec: +07:23:05.044
+
+Nickel SN location:
+RA: 13:48:06.0540 Dec: +07:23:16.1206 +- 0.0148 arcsec
+
+Nickel other star location:
+RA: 13:48:07.2544 Dec: +07:23:04.9518  +- 0.0080 arcsec
+
+Kuiper host galaxy location:
+RA: 13:48:06.0072  Dec: +07:23:15.4115  +- 0.3019 arcsec
+
+Kuiper other star location:
+RA: 13:48:07.2807  Dec: +07:23:05.0081 +-  0.0130 arcsec
+
+%differences
+>> sqrt(0.0148^2+0.3019^2)
+
+ans =
+
+    0.3023
+
+deltaRA = 06.0540 - 06.0072
+deltaDEC = 16.1206 - 15.4115
+
+ 0.0468
+ 0.7091
+ 
+ 
+>> sqrt( 0.0468^2 +  0.7091^2)
+
+ans =
+
+    0.7106
+	
+	
+ xdifferenceerrorarcsec =
+
+    0.2477
+ 
+ ydifferenceerrorarcsec =
+
+    0.1732
+ 
+ 
+ 
+%Code to find the last digit values:
+
+%SN
+NickelimageSNloc = [446.357 469.937];
+
+NickelimageSNvalues(1,:) = [446 469 06.062 15.768];
+NickelimageSNvalues(2,:) = [446 470 06.063 16.139];
+NickelimageSNvalues(3,:) = [447 469 06.037 15.782];
+NickelimageSNvalues(4,:) = [447 470 06.038 16.153];
+
+Nickelimagexscale(1) = (NickelimageSNvalues(3,3) - NickelimageSNvalues(1,3))/(NickelimageSNvalues(3,1) - NickelimageSNvalues(1,1));
+Nickelimagexscale(2) = (NickelimageSNvalues(3,4) - NickelimageSNvalues(1,4))/(NickelimageSNvalues(3,1) - NickelimageSNvalues(1,1));
+Nickelimageyscale(1) = (NickelimageSNvalues(2,3) - NickelimageSNvalues(1,3))/(NickelimageSNvalues(2,2) - NickelimageSNvalues(1,2));
+Nickelimageyscale(2) = (NickelimageSNvalues(2,4) - NickelimageSNvalues(1,4))/(NickelimageSNvalues(2,2) - NickelimageSNvalues(1,2));
+
+Nickelimagexshift = NickelimageSNloc(1) - NickelimageSNvalues(1,1);
+Nickelimageyshift = NickelimageSNloc(2) - NickelimageSNvalues(1,2);
+
+NickelimagefinalSNRA = NickelimageSNvalues(1,3) + Nickelimagexshift * Nickelimagexscale(1) + Nickelimageyshift * Nickelimageyscale(1)
+NickelimagefinalSNDec = NickelimageSNvalues(1,4) + Nickelimagexshift * Nickelimagexscale(2) + Nickelimageyshift * Nickelimageyscale(2)
+
+%Other star
+Nickelimageotherstarloc = [398.314 441.233];
+
+Nickelimageotherstarvalues(1,:) = [398 441 07.262 04.861];
+Nickelimageotherstarvalues(2,:) = [398 442 07.263 05.232];
+Nickelimageotherstarvalues(3,:) = [399 441 07.237 04.875];
+Nickelimageotherstarvalues(4,:) = [399 442 07.238 05.246];
+
+Nickelimagexscaleotherstar(1) = (Nickelimageotherstarvalues(3,3) - Nickelimageotherstarvalues(1,3))/(Nickelimageotherstarvalues(3,1) - Nickelimageotherstarvalues(1,1));
+Nickelimagexscaleotherstar(2) = (Nickelimageotherstarvalues(3,4) - Nickelimageotherstarvalues(1,4))/(Nickelimageotherstarvalues(3,1) - Nickelimageotherstarvalues(1,1));
+Nickelimageyscaleotherstar(1) = (Nickelimageotherstarvalues(2,3) - Nickelimageotherstarvalues(1,3))/(Nickelimageotherstarvalues(2,2) - Nickelimageotherstarvalues(1,2));
+Nickelimageyscaleotherstar(2) = (Nickelimageotherstarvalues(2,4) - Nickelimageotherstarvalues(1,4))/(Nickelimageotherstarvalues(2,2) - Nickelimageotherstarvalues(1,2));
+
+Nickelimagexshiftotherstar = Nickelimageotherstarloc(1) - Nickelimageotherstarvalues(1,1);
+Nickelimageyshiftotherstar = Nickelimageotherstarloc(2) - Nickelimageotherstarvalues(1,2);
+
+NickelimagefinalotherstarRA = Nickelimageotherstarvalues(1,3) + Nickelimagexshiftotherstar * Nickelimagexscaleotherstar(1) + Nickelimageyshiftotherstar * Nickelimageyscaleotherstar(1)
+NickelimagefinalotherstarDec = Nickelimageotherstarvalues(1,4) + Nickelimagexshiftotherstar * Nickelimagexscaleotherstar(2) + Nickelimageyshiftotherstar * Nickelimageyscaleotherstar(2)
+
+
+
+%SN
+KuiperimageSNloc = [929.716 548.135];
+
+KuiperimageSNvalues(1,:) = [929 548 06.028 15.352];
+KuiperimageSNvalues(2,:) = [929 549 06.028 15.777];
+KuiperimageSNvalues(3,:) = [930 548 05.999 15.355];
+KuiperimageSNvalues(4,:) = [930 549 06.000 15.779];
+
+Kuiperimagexscale(1) = (KuiperimageSNvalues(3,3) - KuiperimageSNvalues(1,3))/(KuiperimageSNvalues(3,1) - KuiperimageSNvalues(1,1));
+Kuiperimagexscale(2) = (KuiperimageSNvalues(3,4) - KuiperimageSNvalues(1,4))/(KuiperimageSNvalues(3,1) - KuiperimageSNvalues(1,1));
+Kuiperimageyscale(1) = (KuiperimageSNvalues(2,3) - KuiperimageSNvalues(1,3))/(KuiperimageSNvalues(2,2) - KuiperimageSNvalues(1,2));
+Kuiperimageyscale(2) = (KuiperimageSNvalues(2,4) - KuiperimageSNvalues(1,4))/(KuiperimageSNvalues(2,2) - KuiperimageSNvalues(1,2));
+
+Kuiperimagexshift = KuiperimageSNloc(1) - KuiperimageSNvalues(1,1);
+Kuiperimageyshift = KuiperimageSNloc(2) - KuiperimageSNvalues(1,2);
+
+KuiperimagefinalSNRA = KuiperimageSNvalues(1,3) + Kuiperimagexshift * Kuiperimagexscale(1) + Kuiperimageyshift * Kuiperimageyscale(1)
+KuiperimagefinalSNDec = KuiperimageSNvalues(1,4) + Kuiperimagexshift * Kuiperimagexscale(2) + Kuiperimageyshift * Kuiperimageyscale(2)
+
+%Other star
+Kuiperimageotherstarloc = [885.285 523.921];
+
+Kuiperimageotherstarvalues(1,:) = [885 523 07.289 04.617];
+Kuiperimageotherstarvalues(2,:) = [885 524 07.289 05.041];
+Kuiperimageotherstarvalues(3,:) = [886 523 07.260 04.619];
+Kuiperimageotherstarvalues(4,:) = [886 524 07.260 05.044];
+
+Kuiperimagexscaleotherstar(1) = (Kuiperimageotherstarvalues(3,3) - Kuiperimageotherstarvalues(1,3))/(Kuiperimageotherstarvalues(3,1) - Kuiperimageotherstarvalues(1,1));
+Kuiperimagexscaleotherstar(2) = (Kuiperimageotherstarvalues(3,4) - Kuiperimageotherstarvalues(1,4))/(Kuiperimageotherstarvalues(3,1) - Kuiperimageotherstarvalues(1,1));
+Kuiperimageyscaleotherstar(1) = (Kuiperimageotherstarvalues(2,3) - Kuiperimageotherstarvalues(1,3))/(Kuiperimageotherstarvalues(2,2) - Kuiperimageotherstarvalues(1,2));
+Kuiperimageyscaleotherstar(2) = (Kuiperimageotherstarvalues(2,4) - Kuiperimageotherstarvalues(1,4))/(Kuiperimageotherstarvalues(2,2) - Kuiperimageotherstarvalues(1,2));
+
+Kuiperimagexshiftotherstar = Kuiperimageotherstarloc(1) - Kuiperimageotherstarvalues(1,1);
+Kuiperimageyshiftotherstar = Kuiperimageotherstarloc(2) - Kuiperimageotherstarvalues(1,2);
+
+KuiperimagefinalotherstarRA = Kuiperimageotherstarvalues(1,3) + Kuiperimagexshiftotherstar * Kuiperimagexscaleotherstar(1) + Kuiperimageyshiftotherstar * Kuiperimageyscaleotherstar(1)
+KuiperimagefinalotherstarDec = Kuiperimageotherstarvalues(1,4) + Kuiperimagexshiftotherstar * Kuiperimagexscaleotherstar(2) + Kuiperimageyshiftotherstar * Kuiperimageyscaleotherstar(2)
+
+%error calculations
+
+%read in table of xy pixel locations for SN and other star for both Nickel and Kuiper
+[Nickelpixelvalues(1,:) Nickelpixelvalues(2,:)] = textread('Nickelmatvar.dat','%f%f','delimiter',' ');
+[Kuiperpixelvalues(1,:) Kuiperpixelvalues(2,:)] = textread('Kuipermatvar.dat','%f%f','delimiter',' ');
+
+NickelSNxerror = std(Nickelpixelvalues(1,1:2:end))
+NickelSNyerror = std(Nickelpixelvalues(2,1:2:end))
+Nickelotherstarxerror = std(Nickelpixelvalues(1,2:2:end))
+Nickelotherstaryerror = std(Nickelpixelvalues(2,2:2:end))
+
+KuiperSNxerror = std(Kuiperpixelvalues(1,1:2:end))
+KuiperSNyerror = std(Kuiperpixelvalues(2,1:2:end))
+Kuiperotherstarxerror = std(Kuiperpixelvalues(1,2:2:end))
+Kuiperotherstaryerror = std(Kuiperpixelvalues(2,2:2:end))
+
+
+NickelSNerror = sqrt(NickelSNxerror^2 + NickelSNyerror^2)
+Nickelotherstarerror = sqrt(Nickelotherstarxerror^2 + Nickelotherstaryerror^2)
+KuiperSNerror = sqrt(KuiperSNxerror^2 + KuiperSNyerror^2)
+Kuiperotherstarerror = sqrt(Kuiperotherstarxerror^2 + Kuiperotherstaryerror^2)
+
+%from imagexscale and imageyscale (but it varies in each dimension, so this may not be perfect)
+Nickelpixelscale = 0.3710;
+Kuiperpixelscale = 0.4240;
+
+NickelSNerrorarcsec = NickelSNerror * Nickelpixelscale
+Nickelotherstarerrorarcsec = Nickelotherstarerror  * Nickelpixelscale
+KuiperSNerrorarcsec = KuiperSNerror * Kuiperpixelscale
+Kuiperotherstarerrorarcsec = Kuiperotherstarerror * Kuiperpixelscale
+
+NickelSNxerrorarcsec = NickelSNxerror*Nickelpixelscale
+NickelSNyerrorarcsec = NickelSNyerror*Nickelpixelscale
+KuiperSNxerrorarcsec = KuiperSNxerror*Kuiperpixelscale
+KuiperSNyerrorarcsec = KuiperSNyerror*Kuiperpixelscale
+
+xdifferenceerrorarcsec = sqrt(NickelSNxerrorarcsec^2+KuiperSNxerrorarcsec^2)
+ydifferenceerrorarcsec = sqrt(NickelSNyerrorarcsec^2+KuiperSNyerrorarcsec^2)

@@ -1,0 +1,117 @@
+mkdir raw
+mkdir proc
+mkdir proc/pixels
+
+cd raw
+%move data into raw
+
+!rename 's/\.fit/.fits/' *.fit
+sections *.fits > rawdata
+!ls *.fits | sed 's/^/..\/proc\//;s/.fits/proc.fits/' > outdata
+rfits @rawdata "" @outdata
+cd ../proc
+hselect *.fits $I,airmass,dispaxis yes
+
+%if no dispaxis, perform
+hedit *.fits dispaxis "1" add=yes
+
+%check that bad pixel file exists
+cd home/cbilinski/iraf
+
+eparam biasfix
+biasfix
+
+hselect *proc.fits $I,APERTURE 'title == "FLAT"'
+
+hselect *proc.fits $I 'title == "FLAT" && aperture == 1' > flats_ap1
+hselect *proc.fits $I 'title == "FLAT" && aperture == 2' > flats_ap2
+hselect *proc.fits $I 'title == "FLAT" && aperture == 3' > flats_ap3
+hselect *proc.fits $I 'title == "FLAT" && aperture == 4' > flats_ap4
+hselect *proc.fits $I 'title == "FLAT" && aperture == 5' > flats_ap5
+hselect *proc.fits $I 'title == "FLAT" && aperture == 6' > flats_ap6
+
+imsum @flats_ap1 medflat_ap1.fits option=median
+imsum @flats_ap2 medflat_ap2.fits option=median
+imsum @flats_ap3 medflat_ap3.fits option=median
+imsum @flats_ap4 medflat_ap4.fits option=median
+imsum @flats_ap5 medflat_ap5.fits option=median
+imsum @flats_ap6 medflat_ap6.fits option=median
+
+implot medflat_ap1
+%then :a 25
+%then :c 500
+
+eparam polflat
+polflat
+
+!ds9 &
+display medflat_ap3.ratio
+
+imcopy a056proc.fits henear.imh
+
+eparam polid
+polid
+
+%%%
+
+
+imcopy b039.fits ../../2014apr19/proc/.
+imcopy b040.fits ../../2014apr19/proc/.
+imcopy b041.fits ../../2014apr19/proc/.
+imcopy b042.fits ../../2014apr19/proc/.
+
+eparam biasfix
+biasfix
+
+epar polred
+polred
+
+imcopy b035.fits ../../2014apr19/proc/.
+imcopy b036.fits ../../2014apr19/proc/.
+imcopy b037.fits ../../2014apr19/proc/.
+imcopy b038.fits ../../2014apr19/proc/.
+
+%twice for q and u, same for nicol and others as well
+epar polred
+polred
+
+%for nicol
+epar polred
+polred
+
+epar ptheta
+ptheta
+
+%bunch of commands at grants office
+
+
+%
+
+imcopy b023.fits ../../2014apr19/proc/.
+imcopy b024.fits ../../2014apr19/proc/.
+imcopy b025.fits ../../2014apr19/proc/.
+imcopy b026.fits ../../2014apr19/proc/.
+
+epar biasfix
+
+biasfix
+
+epar polred
+polred
+
+observatory
+
+epar polflux
+pulflox
+
+epar avgflux
+avgflux
+
+
+
+
+
+
+
+
+

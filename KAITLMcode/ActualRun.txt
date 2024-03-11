@@ -1,0 +1,90 @@
+___________________________________________________________FDR and FAKESTAR CODE__________________________________________________________
+
+
+% Find date of supernova explosion and paste here 
+name: sn2006gy
+date: 2006 09 18
+
+%astrometry.net the template or a good image if that one sucks
+
+%make a list file for all of the images before the supernova and one for all of the images after the supernova (imlim, all images up until 2 months after sn, snpresent all images after SN for 1 year and images 1 month before, presn all images prior to sn and 2 months after)
+cd /home/cbilinski/database_chris/2006gy
+ls 2006gy*.fit > imlim.list
+ls 2006gy*.fit > snpresent.list
+gedit snpresent.list &
+gedit imlim.list &
+
+cp imlim.list presn.list
+
+%%% write a program to do the above steps
+
+%move in code
+cp /home/cbilinski/iraf/login.cl .
+cp /home/cbilinski/database_chris/soft/*.pl .
+cp /home/cbilinski/database_chris/soft/*.cl .
+cp /home/cbilinski/database_chris/soft/fakestarmags.list .
+cp /home/cbilinski/database_chris/soft/sn.addstar* .
+cp /home/cbilinski/database_chris/soft/sex .
+mv sn.addstar sn2006gy.addstar
+mv sn.addstar.atsn sn2006gy.addstar.atsn
+
+%some necessary settings
+bash
+SNROOT=/home/cbilinski
+export SNROOT
+SNPATH=/home/cbilinski/source/bin
+export SNPATH
+SNSEARCH1=/home/cbilinski/source/snsearch
+export SNSEARCH1
+SNSOURCE=/home/cbilinski/source/source
+export SNSOURCE
+echo avery >s1_removemesoitdoesntfail
+
+% align the data images to the template image, edit register.cl, view.cl to have the current SN name
+cl
+cl < register.cl
+cl < register.cl
+ls *.fit.shift.fits > shiftedfiles.list
+% do twice in case it misses the first file the first time
+
+
+% look at the alignments and decide if they are y(es), +m(edium image but good shifts), n(ot) good shifts, j(unk) for useless images
+!ds9 &
+task $vvv=view.cl
+vvv
+
+%store all of the shifted files as backups and bring only the good shifts back to the operating folder
+logout
+sed 's/.shift.fits//' imlim.list.ans.temp > imlim.list.ans
+grep '  y' imlim.list.ans > imlim.list.yes
+mkdir shiftbackups
+sed  's/  .*/\.shift\.fits shiftbackups\//'  imlim.list.ans | sed 's/^/mv /' > imlim.list.ans.script
+. imlim.list.ans.script
+sed  's/  .*/\.shift\.fits ./'  imlim.list.yes | sed 's/^/cp shiftbackups\//' > imlim.list.yes.script
+. imlim.list.yes.script
+ls *.shift.fits > imlim.needsaligning.temp.list
+sed 's/\.fits$//' imlim.needsaligning.temp.list > imlim.needsaligning.list
+
+%align the images to proper WCS by inverting them
+cl
+wcscopy *.shift.fits ref/new-image.fits
+cl < align.cl
+cp ref/new-image.fits sn.unaligned.fits
+imcopy sn.unaligned.fits[*,-*] sn.fit
+logout
+
+%put in the correct coordinates from the supernova image/coordinates document and run the rotate code on the template image
+cp sn.fit /home/cbilinski/database_chris/soft/rotatecode/sn.fit
+cd /home/cbilinski/database_chris/soft/rotatecode
+gedit rotate.in &
+
+./rotate 
+%put in random coordinates when it asks for X and Y, this doesnt matter
+
+%copy over the usnob catalog values into the operating folder and then run aperture photometry on all of the aligned images
+cd /home/cbilinski/database_chris/2006gy
+cp /home/cbilinski/database_chris/soft/rotatecode/fort.50 .
+cl
+digiphot
+daophot
+phot *.align.fits fort.50

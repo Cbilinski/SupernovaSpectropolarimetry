@@ -1,0 +1,77 @@
+import pyfits
+
+hdulist = pyfits.open("ADP.2014-05-26T15_03_44.393.fits")
+
+# print column information
+hdulist[1].columns
+
+# get to the data part (in extension 1)
+scidata = hdulist[1].data
+
+wave = scidata[0][0]
+arr1 = scidata[0][1]
+#arr2 = scidata[0][2]
+# etc.
+# where arr1 will contain the data corresponding to the column named: hdulist[1].columns[1]
+# where arr2 will contain the data corresponding to the column named: hdulist[1].columns[2]
+# etc.
+
+# To plot using maptplotlib:
+
+hdulist = pyfits.open("ADP.2014-05-26T15_03_44.393.fits")
+
+hdulist[1].columns
+
+scidata2 = hdulist[1].data
+
+wave2 = scidata2[0][0]
+arr2 = scidata2[0][1]
+
+#
+
+hdulist = pyfits.open("ADP.2014-05-26T15_03_44.393.fits")
+
+hdulist[1].columns
+
+scidata3 = hdulist[1].data
+
+wave3 = scidata3[0][0]
+arr3 = scidata3[0][1]
+
+
+hdulist = pyfits.open("ADP.2014-05-26T15_03_44.393.fits")
+
+hdulist[1].columns
+
+scidata4 = hdulist[1].data
+
+wave4 = scidata4[0][0]
+arr4 = scidata4[0][1]
+
+
+import matplotlib.pyplot as plt
+
+plt.plot(wave*10, arr1)
+plt.plot(wave2*10, arr2)
+plt.plot(wave3*10, arr3)
+plt.plot(wave4*10, arr4)
+
+plt.show()
+
+
+
+
+
+rawdata = fitsread('ADP.2014-05-26T15_03_44.393.fits','binarytable')
+wave = cell2mat(rawdata(1));
+flux = cell2mat(rawdata(2));
+plot(wave,flux)
+
+
+plt.plot(wave4*10, arr4)
+
+plt.show()
+
+
+
+
