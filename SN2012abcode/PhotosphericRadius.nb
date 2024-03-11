@@ -1,0 +1,107 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      2952,         99]
+NotebookOptionsPosition[      2495,         78]
+NotebookOutlinePosition[      2839,         93]
+CellTagsIndexPosition[      2796,         90]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"T", "=", "15000"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Sigma]", "=", 
+   RowBox[{"5.6704", "*", 
+    SuperscriptBox["10", 
+     RowBox[{"-", "5"}]]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Lsun", "=", 
+   RowBox[{"3.846", "*", 
+    SuperscriptBox["10", "33"]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"L", "=", 
+   RowBox[{"5", "*", 
+    SuperscriptBox["10", "9"], "Lsun"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"cmtoau", "=", 
+  FractionBox["1", 
+   RowBox[{"1.496", "*", 
+    SuperscriptBox["10", "13"]}]]}]}], "Input",
+ CellChangeTimes->{{3.685756235218032*^9, 3.6857562801305113`*^9}, {
+  3.6857644447640524`*^9, 3.685764450894863*^9}, {3.6857644914237347`*^9, 
+  3.685764499286148*^9}, {3.6857645439490266`*^9, 3.68576455727145*^9}, {
+  3.685792925756854*^9, 3.6857929555841064`*^9}, {3.6882359779546747`*^9, 
+  3.6882359824162827`*^9}, {3.690642470957017*^9, 3.6906425126589*^9}}],
+
+Cell[BoxData["6.684491978609626`*^-14"], "Output",
+ CellChangeTimes->{
+  3.685764558004651*^9, {3.685792926911256*^9, 3.6857929562393074`*^9}, 
+   3.6882359839606853`*^9, {3.6906424736090217`*^9, 3.690642513891302*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"R", "=", 
+  RowBox[{
+   SqrtBox[
+    FractionBox["L", 
+     RowBox[{"4", "\[Pi]", " ", "\[Sigma]", " ", 
+      SuperscriptBox["T", "4"]}]]], "cmtoau"}]}]], "Input",
+ CellChangeTimes->{{3.685764563355461*^9, 3.685764590405908*^9}}],
+
+Cell[BoxData["48.804936329574666`"], "Output",
+ CellChangeTimes->{{3.6857929433692846`*^9, 3.685792958329711*^9}, 
+   3.688235993539102*^9, {3.6906424787414303`*^9, 3.690642516336711*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Solve", "[", 
+  RowBox[{
+   RowBox[{"L", "==", 
+    RowBox[{"4", "\[Pi]", " ", 
+     SuperscriptBox["R", "2"], "\[Sigma]", " ", 
+     SuperscriptBox["T", "4"]}]}], ",", "R"}], "]"}]], "Input"]
+},
+WindowSize->{759, 815},
+WindowMargins->{{122, Automatic}, {Automatic, 80}},
+FrontEndVersion->"10.4 for Microsoft Windows (32-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 976, 24, 127, "Input"],
+Cell[1559, 48, 219, 3, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1815, 56, 254, 7, 56, "Input"],
+Cell[2072, 65, 188, 2, 31, "Output"]
+}, Open  ]],
+Cell[2275, 70, 216, 6, 33, "Input"]
+}
+]
+*)
+

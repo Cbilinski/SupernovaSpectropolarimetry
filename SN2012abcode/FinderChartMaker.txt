@@ -1,0 +1,288 @@
+
+
+
+
+cd C:/Users/Cbilinski/Dropbox/Astrophysics/Projects/GradSchool/SN2012ab/figures
+ipython --pylab
+import aplpy
+
+%new version using measured values
+
+
+185.6983333-185.6995833, 5.6069-5.60815
+
+
+
+
+gc1 = aplpy.FITSFigure('Rimage.fits')
+gc1.show_grayscale(vmin=500, vmid=None, vmax=1050, pmin=2.5, pmax=99.5)
+gc1.set_theme('publication')
+gc1.recenter(185.6984496, 5.6068978, radius=0.015)  # degrees
+gc1.show_rectangles(185.6984496, 5.6081478, 0.000001, 0.0025,edgecolor='red')
+gc1.show_rectangles(185.6996996, 5.6068978, 0.0025, 0.000001,edgecolor='red')
+gc1.add_label(185.6984496, 5.6188978, 'SN 2012ab', size=21)
+gc1.add_label(185.6984496, 5.6228978, 'June 11, 2015: SN has faded', size=21)
+gc1.axis_labels.set_font(size=21)
+gc1.tick_labels.set_font(size=16)
+gc1.ticks.set_xspacing(0.01)
+gc1.tick_labels.set_xformat('hh:mm:ss')
+
+gc1.save('SN2012abfinder.eps')
+gc1.save('SN2012abfinder.pdf')
+
+
+gc4 = aplpy.FITSFigure('newtestROTSE.fits')
+gc4.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc4.set_theme('publication')
+gc4.recenter(185.6984496, 5.6067810, radius=0.015)  # degrees
+gc4.show_rectangles(185.6984496, 5.609281, 0.000001, 0.005,edgecolor='red')
+gc4.show_rectangles(185.7009496, 5.6067810, 0.005, 0.000001,edgecolor='red')
+gc4.add_label(185.6984496, 5.6188978, 'SN 2012ab', size=21)
+gc4.add_label(185.6984496, 5.6228978, 'February 3, 2012: SN is visible', size=21)
+gc4.axis_labels.set_font(size=21)
+gc4.tick_labels.set_font(size=16)
+gc4.ticks.set_xspacing(0.01)
+gc4.tick_labels.set_xformat('hh:mm:ss')
+
+gc4.save('SN2012abfinderwithSN.eps')
+gc4.save('SN2012abfinderwithSN.pdf')
+
+185.6984496    5.6068978
+
+
+185.6984496    5.6067810
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%old version using reported values
+
+gc1 = aplpy.FITSFigure('Rimage.fits')
+gc1.show_grayscale(vmin=500, vmid=None, vmax=1050, pmin=2.5, pmax=99.5)
+gc1.set_theme('publication')
+gc1.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc1.show_rectangles(185.6983333, 5.60815, 0.000001, 0.0025)
+gc1.show_rectangles(185.6995833, 5.6069, 0.0025, 0.000001)
+gc1.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc1.add_label(185.6983333, 5.6229, 'June 11, 2015: SN has faded', size=21)
+gc1.axis_labels.set_font(size=21)
+gc1.tick_labels.set_font(size=16)
+gc1.ticks.set_xspacing(0.01)
+gc1.tick_labels.set_xformat('hh:mm:ss')
+
+gc1.save('SN2012abfinder.eps')
+gc1.save('SN2012abfinder.pdf')
+
+
+gc4 = aplpy.FITSFigure('ROTSE120203image.fits')
+gc4.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc4.set_theme('publication')
+gc4.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc4.show_rectangles(185.6983333, 5.6094, 0.000001, 0.005)
+gc4.show_rectangles(185.7008333, 5.6069, 0.005, 0.000001)
+gc4.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc4.add_label(185.6983333, 5.6229, 'February 3, 2012: SN is visible', size=21)
+gc4.axis_labels.set_font(size=21)
+gc4.tick_labels.set_font(size=16)
+gc4.ticks.set_xspacing(0.01)
+gc4.tick_labels.set_xformat('hh:mm:ss')
+
+gc4.save('SN2012abfinderwithSN.eps')
+gc4.save('SN2012abfinderwithSN.pdf')
+
+
+gc4 = aplpy.FITSFigure('clearedheadertest.fits')
+gc4.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc4.set_theme('publication')
+gc4.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc4.show_rectangles(185.6983333, 5.6094, 0.000001, 0.005)
+gc4.show_rectangles(185.7008333, 5.6069, 0.005, 0.000001)
+gc4.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc4.add_label(185.6983333, 5.6229, 'February 3, 2012: SN is visible', size=21)
+gc4.axis_labels.set_font(size=21)
+gc4.tick_labels.set_font(size=16)
+gc4.ticks.set_xspacing(0.01)
+gc4.tick_labels.set_xformat('hh:mm:ss')
+gc4.save('SN2012abfinderwithSN.eps')
+gc4.save('SN2012abfinderwithSN.pdf')
+
+
+
+
+
+
+
+%late time ROTSE image
+
+
+
+
+
+
+
+
+
+gc1 = aplpy.FITSFigure('120606_tss1221+0618-122247+053625_3b000-000_c.fit')
+gc1.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc1.set_theme('publication')
+gc1.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc1.show_rectangles(185.6983333, 5.60815, 0.000001, 0.0025)
+gc1.show_rectangles(185.6995833, 5.6069, 0.0025, 0.000001)
+gc1.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc1.axis_labels.set_font(size=21)
+gc1.tick_labels.set_font(size=16)
+gc1.ticks.set_xspacing(0.01)
+gc1.tick_labels.set_xformat('hh:mm:ss')
+
+gc1.save('SN2012abfinderlate.eps')
+gc1.save('SN2012abfinderlate.pdf')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+gc2 = aplpy.FITSFigure('ROTSE120129image.fits')
+gc2.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc2.set_theme('publication')
+gc2.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc2.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc2.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc2.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc2.axis_labels.set_font(size=21)
+gc2.tick_labels.set_font(size=16)
+gc2.ticks.set_xspacing(0.01)
+gc2.tick_labels.set_xformat('hh:mm:ss')
+
+
+gc3 = aplpy.FITSFigure('ROTSE120131image.fits')
+gc3.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc3.set_theme('publication')
+gc3.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc3.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc3.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc3.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc3.axis_labels.set_font(size=21)
+gc3.tick_labels.set_font(size=16)
+gc3.ticks.set_xspacing(0.01)
+gc3.tick_labels.set_xformat('hh:mm:ss')
+
+
+gc4 = aplpy.FITSFigure('ROTSE120203image.fits')
+gc4.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc4.set_theme('publication')
+gc4.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc4.show_rectangles(185.6983333, 5.6094, 0.000001, 0.005)
+gc4.show_rectangles(185.7008333, 5.6069, 0.005, 0.000001)
+gc4.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc4.axis_labels.set_font(size=21)
+gc4.tick_labels.set_font(size=16)
+gc4.ticks.set_xspacing(0.01)
+gc4.tick_labels.set_xformat('hh:mm:ss')
+
+gc4.save('SN2012abfinderwithSN.eps')
+gc4.save('SN2012abfinderwithSN.pdf')
+
+
+
+
+gc5 = aplpy.FITSFigure('ROTSE120222image.fits')
+gc5.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc5.set_theme('publication')
+gc5.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc5.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc5.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc5.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc5.axis_labels.set_font(size=21)
+gc5.tick_labels.set_font(size=16)
+gc5.ticks.set_xspacing(0.01)
+gc5.tick_labels.set_xformat('hh:mm:ss')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%old code
+%set the x-line value 
+gc1 = aplpy.FITSFigure('Rimage.fits')
+gc1.show_grayscale(vmin=None, vmid=None, vmax=None, pmin=2.5, pmax=99.5)
+gc1.set_theme('publication')
+gc1.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc1.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc1.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc1.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc1.axis_labels.set_font(size=21)
+gc1.tick_labels.set_font(size=19)
+
+gc2 = aplpy.FITSFigure('Rimage.fits')
+gc2.show_grayscale(vmin=600, vmid=None, vmax=850, pmin=2.5, pmax=99.5)
+gc2.set_theme('publication')
+gc2.recenter(185.6983333, 5.6069, radius=0.015)  # degrees
+gc2.show_rectangles(185.6983333, 5.6119, 0.000001, 0.01)
+gc2.show_rectangles(185.7033333, 5.6069, 0.01, 0.000001)
+gc2.add_label(185.6983333, 5.6189, 'SN 2012ab', size=21)
+gc2.axis_labels.set_font(size=21)
+gc2.tick_labels.set_font(size=19)

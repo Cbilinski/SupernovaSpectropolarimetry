@@ -1,0 +1,201 @@
+
+
+[bbodyfit11 ,bestT(1 ,1), bestalpha(1 ,1)] = blackbodyfit(hetms1_20120207,hetms2_20120207_contscaled,3000,6400,'blackbody_day7_hetms20120207');
+
+
+[bbodyfit31 , wavetemp31  ,bestT(3 ,1), bestalpha(3 ,1)] = blackbodyfit(Lkast1_20120223,Lkast2_20120223_contscaled,3000,6400)
+
+%%% new run code
+[bbodyfit11 ,bestT(1 ,1), bestalpha(1 ,1)] = blackbodyfit(hetms1_20120207,hetms2_20120207_contscaled,3000,6400,'blackbody_day7_hetms_20120207');
+[bbodyfit21 ,bestT(2 ,1), bestalpha(2 ,1)] = blackbodyfit(hetms1_20120216,hetms2_20120216_contscaled,3000,6400,'blackbody_day16_hetms2_20120216');
+[bbodyfit31 ,bestT(3 ,1), bestalpha(3 ,1)] = blackbodyfit(Lkast1_20120223,Lkast2_20120223_contscaled,3000,6400,'blackbody_day23_Lkast2_20120223');
+[bbodyfit41 ,bestT(4 ,1), bestalpha(4 ,1)] = blackbodyfit(mmtbc1_20120301,mmtbc2_20120301_contscaled,3000,6400,'blackbody_day30_mmtbc2_20120301');
+[bbodyfit51 ,bestT(5 ,1), bestalpha(5 ,1)] = blackbodyfit(hetms1_20120301,hetms2_20120301_contscaled,3000,6400,'blackbody_day30_hetms2_20120301');
+[bbodyfit61 ,bestT(6 ,1), bestalpha(6 ,1)] = blackbodyfit(spolb1_20120323,spolb2_20120323_contscaled,3000,6400,'blackbody_day52_spolb2_20120323');
+[bbodyfit71 ,bestT(7 ,1), bestalpha(7 ,1)] = blackbodyfit(spolm1_20120416,spolm2_20120416_contscaled,3000,6400,'blackbody_day76_spolm2_20120416');
+[bbodyfit81 ,bestT(8 ,1), bestalpha(8 ,1)] = blackbodyfit(mmtbc1_20120417,mmtbc2_20120417_contscaled,3000,6400,'blackbody_day77_mmtbc2_20120417');
+[bbodyfit91 ,bestT(9 ,1), bestalpha(9 ,1)] = blackbodyfit(Lkast1_20120428,Lkast2_20120428_contscaled,3000,6400,'blackbody_day88_Lkast2_20120428');
+[bbodyfit101,bestT(10,1), bestalpha(10,1)] = blackbodyfit(mmtbc1_20120529,mmtbc2_20120529_contscaled,3000,6400,'blackbody_day119_mmtbc2_20120529');
+[bbodyfit111,bestT(11,1), bestalpha(11,1)] = blackbodyfit(keckL1_20120616,keckL2_20120616_contscaled,3000,6400,'blackbody_day137_keckL2_20120616');
+[bbodyfit121,bestT(12,1), bestalpha(12,1)] = blackbodyfit(mmtbc1_20120701,mmtbc2_20120701_contscaled,3000,6400,'blackbody_day152_mmtbc2_20120701');
+[bbodyfit131,bestT(13,1), bestalpha(13,1)] = blackbodyfit(keckD1_20121115,keckD2_20121115_contscaled,3000,6400,'blackbody_day289_keckD2_20121115');
+[bbodyfit141,bestT(14,1), bestalpha(14,1)] = blackbodyfit(keckD1_20150521,keckD2_20150521_contscaled,3000,6400,'blackbody_day1206_keckD2_20150521');
+
+
+
+
+[bbodyfitSDSS,bestTSDSS, bestalphaSDSS] = blackbodyfit(SDSS1_20080213,SDSS2_20080213./max(SDSS2_20080213),3000,6400,'blackbody_day-1448_SDSSreddened');
+
+
+
+
+
+
+%%%
+
+
+opengl software
+addpath(genpath('C:\Program Files\MATLAB\R2012a\toolbox\altmany-export_fig-173eda0'))
+addpath(genpath('C:\Program Files\MATLAB\R2015b\toolbox\altmany-export_fig-173eda0'))
+plotting = figure;
+set(gcf,'color','w');
+set(plotting,'units','normalized','outerposition',[0 0 1 1]);
+set(plotting,'PaperUnits','normalized','PaperPosition',[0 0 3 1]);
+set(gcf,'renderer','painters')
+colormap jet
+
+
+[bbodyfit(1,1), wavetemp(1,1) ,bestT(1,1), bestalpha(1,1)] = blackbodyfit(Lkast1_20120223,Lkast2_20120223_contscaled,3000,6400)
+[bbodyfit(1,2), wavetemp(1,2) ,bestT(1,2), bestalpha(1,2)] = blackbodyfit(Lkast1_20120223,Lkast2_20120223_contscaled,7000,10000)
+
+
+
+	%%Blackbody plot
+	set(plotting,'PaperUnits','normalized','PaperPosition',[0 0 3 1.5]);
+	set(gcf,'color','w');
+	clf
+	semilogy(Lkast1_20120223*10^-8,Lkast2_20120223_contscaled,'LineWidth',2,'Color',[0.5 0.5 0.5])
+	hold on
+	semilogy(wavetest,squeeze(atest),'LineWidth',2,'Color',[0 0 0])
+	htext = text(6900,5*0.9*0.5^0*0.175,'day 23','interpreter','latex','FontName','CMU Serif Roman');
+	set(htext, 'Color',[0.5 0.5 0.5])
+	set(htext, 'FontSize',18)
+	htext = text(7750,2,'SN 2012ab','interpreter','latex','FontName','CMU Serif');
+	set(htext, 'Color', 'black')	
+	set(htext, 'FontSize',26)
+	htext = text(2965,0.1,'.','interpreter','latex','FontName','CMU Serif Roman');
+	set(htext, 'Color',[0.8 0.8 0.8])
+	xlabel('Rest Wavelength ($\AA$) ','interpreter','latex','FontSize',24,'FontName','CMU Serif Roman')
+	%xlabel(['Rest Wavelength (',char(197),')'],'interpreter','latex','FontSize',24,'FontName','CMU Serif Roman')
+	%xlabel('Rest Wavelength (\AA)','interpreter','latex','FontSize',22,'FontName','CMU Serif Roman')
+	%ylabel('F_\lambda (Scaled)','interpreter','latex','FontSize',24,'FontName','CMU Serif Roman')
+	ylabel('$F_\lambda$ (Scaled)','interpreter','latex','FontSize',24,'FontName','CMU Serif Roman')
+	%title('', 'FontSize', 22)
+	axis([[3000*10^-8 9150*10^-8] [0.001 30]])
+	ax1 = gca;
+	ax2 = axes('Position',get(ax1,'Position'),'YAxisLocation','right','XAxisLocation','top','Color','none');
+	ylabel(ax2,'','FontSize',22)
+	xlabel(ax2,'')
+	set(ax2,'xtick',[],'YTick',[])
+	set(ax1,'FontSize',22)
+	set(ax2,'FontSize',22)
+	set(ax1,'XMinorTick','on','YMinorTick','on')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+clf
+plot(lambda,Bbody_lambda_normalized(6))
+
+
+
+%%%Blackbody for day 23
+set(plotting,'PaperUnits','normalized','PaperPosition',[0 0 3 1.5]);
+set(gcf,'color','w');
+clf
+semilogy(Lkast1_20120223,Lkast2_20120223_contscaled*2*1.4,'LineWidth',2,'Color',[0.5 0.5 0.5])
+hold on
+semilogy(lambda*10^8,2.0.*squeeze(Bbody_lambda_normalized(6,1,:)),'LineWidth',2,'Color',[0 0 0])
+semilogy(lambda*10^8,2.3.*squeeze(Bbody_lambda_normalized(7,1,:)),'LineWidth',2,'Color',[1 0 0])
+semilogy(lambda*10^8,2.6.*squeeze(Bbody_lambda_normalized(8,1,:)),'LineWidth',2,'Color',[0 1 0])
+htext = text(6900,5*0.9*0.5^0*0.175,'day 23','interpreter','latex','FontName','CMU Serif Roman')
+set(htext, 'Color',[0.5 0.5 0.5])
+set(htext, 'FontSize',18)
+htext = text(7750,3,'SN 2012ab','interpreter','latex','FontName','CMU Serif')
+set(htext, 'Color', 'black')	
+set(htext, 'FontSize',26)
+htext = text(7750,2.25,'10000','interpreter','latex','FontName','CMU Serif')
+set(htext, 'Color', 'black')	
+set(htext, 'FontSize',26)
+htext = text(7750,1.5,'11000','interpreter','latex','FontName','CMU Serif')
+set(htext, 'Color', 'red')	
+set(htext, 'FontSize',26)
+htext = text(7750,0.75,'12000','interpreter','latex','FontName','CMU Serif')
+set(htext, 'Color', 'green')	
+set(htext, 'FontSize',26)
+htext = text(2965,0.1,'.','interpreter','latex','FontName','CMU Serif Roman')
+set(htext, 'Color',[0.8 0.8 0.8])
+xlabel('Rest Wavelength ($\AA$) ','interpreter','latex','FontSize',24,'FontName','CMU Serif Roman')
+%xlabel(['Rest Wavelength (',char(197),')'],'interpreter','latex','FontSize',24,'FontName','CMU Serif Roman')
+%xlabel('Rest Wavelength (\AA)','interpreter','latex','FontSize',22,'FontName','CMU Serif Roman')
+%ylabel('F_\lambda (Scaled)','interpreter','latex','FontSize',24,'FontName','CMU Serif Roman')
+ylabel('$F_\lambda$ (Scaled)','interpreter','latex','FontSize',24,'FontName','CMU Serif Roman')
+%title('', 'FontSize', 22)
+axis([[3000 9150] [0.2 5]])
+ax1 = gca;
+ax2 = axes('Position',get(ax1,'Position'),'YAxisLocation','right','XAxisLocation','top','Color','none');
+ylabel(ax2,'','FontSize',22)
+xlabel(ax2,'')
+set(ax2,'xtick',[],'YTick',[])
+set(ax1,'FontSize',22)
+set(ax2,'FontSize',22)
+set(ax1,'XMinorTick','on','YMinorTick','on')
+
+saveas(plotting, ['blackbodyday23.eps'], 'epsc');
+eval(['!epstopdf blackbodyday23.eps']);
+
+
+[bbodyfit21  ,bestT(2 ,1), bestalpha(2 ,1)] = blackbodyfit(hetms1_20120216,hetms2_20120216_contscaled,3000,6400);
+
+
+
+[bbodyfit11 , wavetemp11  ,bestT(1 ,1), bestalpha(1 ,1)] = blackbodyfit(hetms1_20120207,hetms2_20120207_contscaled,3000,6400)
+[bbodyfit12 , wavetemp12  ,bestT(1 ,2), bestalpha(1 ,2)] = blackbodyfit(hetms1_20120207,hetms2_20120207_contscaled,7000,10000)
+[bbodyfit21 , wavetemp21  ,bestT(2 ,1), bestalpha(2 ,1)] = blackbodyfit(hetms1_20120216,hetms2_20120216_contscaled,3000,6400)
+[bbodyfit22 , wavetemp22  ,bestT(2 ,2), bestalpha(2 ,2)] = blackbodyfit(hetms1_20120216,hetms2_20120216_contscaled,7000,10000)
+[bbodyfit31 , wavetemp31  ,bestT(3 ,1), bestalpha(3 ,1)] = blackbodyfit(Lkast1_20120223,Lkast2_20120223_contscaled,3000,6400)
+[bbodyfit32 , wavetemp32  ,bestT(3 ,2), bestalpha(3 ,2)] = blackbodyfit(Lkast1_20120223,Lkast2_20120223_contscaled,7000,10000)
+[bbodyfit41 , wavetemp41  ,bestT(4 ,1), bestalpha(4 ,1)] = blackbodyfit(mmtbc1_20120301,mmtbc2_20120301_contscaled,3000,6400)
+%[bbodyfit42 , wavetemp42  ,bestT(4 ,2), bestalpha(4 ,2)] = blackbodyfit(mmtbc1_20120301,mmtbc2_20120301_contscaled,7000,10000)
+[bbodyfit51 , wavetemp51  ,bestT(5 ,1), bestalpha(5 ,1)] = blackbodyfit(hetms1_20120301,hetms2_20120301_contscaled,3000,6400)
+[bbodyfit52 , wavetemp52  ,bestT(5 ,2), bestalpha(5 ,2)] = blackbodyfit(hetms1_20120301,hetms2_20120301_contscaled,7000,10000)
+[bbodyfit61 , wavetemp61  ,bestT(6 ,1), bestalpha(6 ,1)] = blackbodyfit(spolb1_20120323,spolb2_20120323_contscaled,3000,6400)
+%[bbodyfit62 , wavetemp62  ,bestT(6 ,2), bestalpha(6 ,2)] = blackbodyfit(spolb1_20120323,spolb2_20120323_contscaled,7000,10000)
+[bbodyfit71 , wavetemp71  ,bestT(7 ,1), bestalpha(7 ,1)] = blackbodyfit(spolm1_20120416,spolm2_20120416_contscaled,3000,6400)
+%[bbodyfit72 , wavetemp72  ,bestT(7 ,2), bestalpha(7 ,2)] = blackbodyfit(spolm1_20120416,spolm2_20120416_contscaled,7000,10000)
+[bbodyfit81 , wavetemp81  ,bestT(8 ,1), bestalpha(8 ,1)] = blackbodyfit(mmtbc1_20120417,mmtbc2_20120417_contscaled,3000,6400)
+%[bbodyfit82 , wavetemp82  ,bestT(8 ,2), bestalpha(8 ,2)] = blackbodyfit(mmtbc1_20120417,mmtbc2_20120417_contscaled,7000,10000)
+[bbodyfit91 , wavetemp91  ,bestT(9 ,1), bestalpha(9 ,1)] = blackbodyfit(Lkast1_20120428,Lkast2_20120428_contscaled,3000,6400)
+[bbodyfit92 , wavetemp92  ,bestT(9 ,2), bestalpha(9 ,2)] = blackbodyfit(Lkast1_20120428,Lkast2_20120428_contscaled,7000,10000)
+[bbodyfit101, wavetemp101 ,bestT(10,1), bestalpha(10,1)] = blackbodyfit(mmtbc1_20120529,mmtbc2_20120529_contscaled,3000,6400)
+%[bbodyfit102, wavetemp102 ,bestT(10,2), bestalpha(10,2)] = blackbodyfit(mmtbc1_20120529,mmtbc2_20120529_contscaled,7000,10000)
+[bbodyfit111, wavetemp111 ,bestT(11,1), bestalpha(11,1)] = blackbodyfit(keckL1_20120616,keckL2_20120616_contscaled,3000,6400)
+[bbodyfit112, wavetemp112 ,bestT(11,2), bestalpha(11,2)] = blackbodyfit(keckL1_20120616,keckL2_20120616_contscaled,7000,10000)
+[bbodyfit121, wavetemp121 ,bestT(12,1), bestalpha(12,1)] = blackbodyfit(mmtbc1_20120701,mmtbc2_20120701_contscaled,3000,6400)
+%[bbodyfit122, wavetemp122 ,bestT(12,2), bestalpha(12,2)] = blackbodyfit(mmtbc1_20120701,mmtbc2_20120701_contscaled,7000,10000)
+[bbodyfit131, wavetemp131 ,bestT(13,1), bestalpha(13,1)] = blackbodyfit(keckD1_20121115,keckD2_20121115_contscaled,3000,6400)
+[bbodyfit132, wavetemp132 ,bestT(13,2), bestalpha(13,2)] = blackbodyfit(keckD1_20121115,keckD2_20121115_contscaled,7000,10000)
+[bbodyfit141, wavetemp141 ,bestT(14,1), bestalpha(14,1)] = blackbodyfit(keckD1_20150521,keckD2_20150521_contscaled,3000,6400)
+[bbodyfit142, wavetemp142 ,bestT(14,2), bestalpha(14,2)] = blackbodyfit(keckD1_20150521,keckD2_20150521_contscaled,7000,10000)
+
+

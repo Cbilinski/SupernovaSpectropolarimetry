@@ -1,0 +1,63 @@
+7    hetms2_20120207 Fluxlow(1)       highflux 12OIII, (NII),  (SII)  questionable fit
+16   hetms2_20120216 Fluxlow(2)       highflux 13OIII, (NII),  (SII)  very questionable fit
+23   Lkast2_20120223 Fluxlow(3)       highflux 1OIII,  1(NII), 1SII   somewhat bad continuum fit
+30   hetms2_20120301 Fluxlow(4)       highflux 14OIII, (NII),  (SII)  very bad continuum fit
+30   mmtbc2_20120301 Fluxlowhalpha(1) highflux         2NII,   2SII   quite bad continuum fit, red cutoff near line
+52   spolb2_20120323 Fluxlow(5)       highflux 3OIII), (NII),  (SII)  bad continuum fit
+76   spolm2_20120416 Fluxlow(6)       highflux 4OIII,  (NII),  (SII)  somewhat bad continuum fit--red cutoff near line
+77   mmtbc2_20120417 Fluxlowhalpha(2) highflux         5NII,   5SII   pretty good continuum fit, but red cutoff near line
+88   Lkast2_20120428 Fluxlow(7)       highflux 6OIII,  6(NII), 6SII   zzzok fit
+119  mmtbc2_20120529 Fluxlowhalpha(3) highflux         7NII,   7SII   questionable continuum fit, red cutoff near line
+137  keckL2_20120616 Fluxlow(8)       highflux 8OIII,  8(NII), 8SII   good fit
+152  mmtbc2_20120701 Fluxlow(9)       highflux 9OIII,  9NII,   9SII   good fit
+289  keckD2_20121115 Fluxlow(10)      highflux 10OIII, 10NII,  10SII  good fit
+1206 keckD2_20150521 Fluxlow(11)      highflux 11OIII, 11NII,  11SII  good fit  
+
+5,7,8,10 in sortedreldate order are the red cut off sources
+12 has a bad red side
+
+reldatered = [ reldate(13) reldate(1) reldate(14) reldate(3:4) reldate(6) reldate(8) reldate(10:11)];
+
+
+
+2
+3
+4
+6
+7
+9
+11
+13
+14
+
+1 5 8 10 12 skipped in EW total plot
+
+1  Lkast2_20120223 OIII, SII  somewhat bad continuum fit
+2  mmtbc2_20120301 NII, SII  quite bad continuum fit, red cutoff near line
+3  spolb2_20120323 (OIII), (NII), (SII)  bad continuum fit
+4  spolm2_20120416 (OIII), (NII), (SII)  somewhat bad continuum fit--red cutoff near line
+5  mmtbc2_20120417 NII, SII  pretty good continuum fit, but red cutoff near line
+6  Lkast2_20120428 OIII, (NII), SII  
+7  mmtbc2_20120529 NII, SII  questionable continuum fit, red cutoff near line
+8  keckL2_20120616 OIII, (NII), SII  good fit
+9  mmtbc2_20120701 OIII, NII, SII  good fit
+10 keckD2_20121115 OIII, NII, SII  good fit
+11 keckD2_20150521 OIII, NII, SII  good fit  
+12 hetms2_20120207 OIII, (NII), (SII)  questionable fit
+13 hetms2_20120216 OIII, (NII), (SII)  very questionable fit
+14 hetms2_20120301 OIII, (NII), (SII)  very bad continuum fit
+
+1  NO-no clear component
+2  YES-much stronger blue side, but not shown in enclosed width
+3  YES-noticeable component on both sides, blue side generally more elevated nearer core
+4  YES-though it might have some absorption?
+5  YES
+6  YES
+7  YES-seems to have red bump?
+8  YES-hard to see red bump if its there anymore
+9  YES-red bump is present
+10 YES-red bump is hard to see
+11 YES-red bump is easy to see
+12 YES-red bump is hard to see
+13 YES-red bump is pretty easy to see
+14 NO-too late, no clear component

@@ -1,0 +1,14 @@
+SN2012ab useful values file
+
+RA: 12:22:47.6
+Dec: +05:36:02.0
+
+RA: 185.6983333
+Dec: 5.6005556
+
+#RA,Dec
+185.6983333,5.6005556,1.0
+
+Measured version of the RA DEC:
+RA: 12:22:47.6279 Dec: +5:36:24.8321 +- 0.2289 arcsec
+185.6984496    5.6068978
